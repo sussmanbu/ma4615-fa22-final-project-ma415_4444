@@ -11,13 +11,14 @@ This comes from the file `content/about.md`.
 This is a website for the final project for MA[46]15 Data Science with R by Team TEAMNAME.
 The members of this team are below.
 
-## Luis Iberico
+##Xingru Chen
 
-Luis is a Ph.D. student in Stats and is the Teaching Fellow for the course.
+Xingru is a senior majoring in Computer Science and Statistics.  
 
-## Dan Sussman
+## Jingyi Gao
 
-Dan is a professor in the Math/Stat department and is the instructor for the course.
+Jingyi Gao is a senior majoring in Mathematics.
+
 
 <!-- Please leave in the information below -->
 
