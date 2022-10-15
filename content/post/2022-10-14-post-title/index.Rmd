@@ -19,13 +19,13 @@ featuredImage: ~
 https://www.kaggle.com/datasets/wenruliu/adult-income-dataset
 In this database, numerous things influence a person's yearly income. Intuitively, it is affected by a person's degree of education, age, gender, occupation, and other factors. This dataset contains 16 columns, including income, degree of education, work class, marital status, etc. I would like to pull in “income” and “degree of education” columns for my data. The original owner of the database is the US Census Bureau. This data can be downloaded from kaggle. For now, I found that there are 7% missing values, and I can clean the data. What we want to find in this data is that if we can investigate the possibility of predicting income level based on the individual’s personal information(education).
 
-##Second Dataset
+## Second Dataset
 Prison Admissions: Beginning 2008
 https://catalog.data.gov/dataset/prison-admissions-beginning-2008 
 
 This public dataset provided by the state of New York contains information on inmate admissions to the NYS Department of Corrections and Community Supervision for a new offense or for a parole violation by month of admission. The data includes admission type, county, gender, age, and crime, which we can find out the correlation between the type of crime and age and gender and county in New York. So that we can make portraits of potential criminals in each county. Since this dataset is intended for public access and use, we can load and clean the data as needed. However, some of the challenges or concerts we have are, firstly, the completeness. Can describe a data point with multiple components, referring to the values of all components of a single datum that are valid. And secondly, the fitness; how well the dataset matches our needs?
 
-#Third Dataset
+## Third Dataset
 IPUMS USA: household income and education 
 Data source:
 Household income: https://usa.ipums.org/usa-action/variables/HHINCOME#description_section 
