@@ -5,7 +5,7 @@ date: '2022-10-14'
 slug: []
 categories: []
 tags: []
-description: dataset chosen and descriptions 
+description: potential dataset and descriptions  
 git hub: https://github.com/xingru88 https://github.com/TongRoxyCheng https://github.com/ZhuoxiZheng https://github.com/Amber-Gao104
 toc: yes
 authors: []
