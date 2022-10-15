@@ -8,7 +8,7 @@ draft: false
 
 This comes from the file `content/about.md`.
 
-This is a website for the final project for MA[46]15 Data Science with R by Team TEAMNAME.
+This is a website for the final project for MA[46]15 Data Science with R by Team ma415-4444.
 The members of this team are below.
 
 ##Xingru Chen
@@ -17,7 +17,19 @@ Xingru is a senior majoring in Computer Science and Statistics.
 
 ##Jingyi Gao
 
+<<<<<<< HEAD
 Jingyi Gao is a senior student at BU majoring in Mathematics.
+=======
+Jingyi Gao is a senior majoring in Mathematics.
+
+##Zhuoxi Zheng
+
+Zhuoxi Zheng is a senior majoring in Economics and Psychology.
+
+##Tong Cheng
+
+Tong Cheng is a senior majoring in Statistics and Psychology.
+>>>>>>> cebacc36c4d2d0549fc76a5ca9897391b1ae0240
 
 
 <!-- Please leave in the information below -->
