@@ -5,7 +5,7 @@ date: '2022-10-14'
 slug: []
 categories: []
 tags: []
-description: First Blog Post
+description: dataset chosen and descriptions 
 git hub: https://github.com/xingru88 https://github.com/TongRoxyCheng https://github.com/ZhuoxiZheng https://github.com/Amber-Gao104
 toc: yes
 authors: []
