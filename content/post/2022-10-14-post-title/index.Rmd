@@ -6,7 +6,7 @@ slug: []
 categories: []
 tags: []
 description: First Blog Post
-git hub: https://github.com/xingru88 https://github.com/TongRoxyCheng https://github.com/ZhuoxiZheng 
+git hub: https://github.com/xingru88 https://github.com/TongRoxyCheng https://github.com/ZhuoxiZheng https://github.com/Amber-Gao104
 toc: yes
 authors: []
 series: []
@@ -17,7 +17,6 @@ featuredImage: ~
 Roxy:
 https://www.kaggle.com/datasets/wenruliu/adult-income-dataset
 In this database, numerous things influence a person's yearly income. Intuitively, it is affected by a person's degree of education, age, gender, occupation, and other factors. This dataset contains 16 columns, including income, degree of education, work class, marital status, etc. I would like to pull in “income” and “degree of education” columns for my data. The original owner of the database is the US Census Bureau. This data can be downloaded from kaggle. For now, I found that there are 7% missing values, and I can clean the data. What we want to find in this data is that if we can investigate the possibility of predicting income level based on the individual’s personal information(education).
-
 
 
 Prison Admissions: Beginning 2008
