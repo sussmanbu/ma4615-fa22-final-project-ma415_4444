@@ -10,23 +10,23 @@ This comes from the file `content/about.md`.
 
 This is a website for the final project for MA[46]15 Data Science with R by Team ma415-4444. The members of this team are below.
 
-##Xingru Chen
+## Xingru Chen
 
 Xingru is a senior majoring in Computer Science and Statistics.\
 GitHub: <https://github.com/xingru88>
 
-##Jingyi Gao
+## Jingyi Gao
 
-Jingyi Gao is a senior majoring in Mathematics. 
+Jingyi Gao is a senior majoring in Mathematics. \
 Github: <https://github.com/Amber-Gao104>
 
-##Zhuoxi Zheng
+## Zhuoxi Zheng
 
-Zhuoxi Zheng is a senior majoring in Economics and Psychology.
+Zhuoxi Zheng is a senior majoring in Economics and Psychology.\
 GitHub: https://github.com/ZhuoxiZheng 
 
-##Tong Cheng 
-Tong Cheng is a senior majoring in Statistics and Psychology. 
+## Tong Cheng 
+Tong Cheng is a senior majoring in Statistics and Psychology. \
 GitHub: <https://github.com/TongRoxyCheng>
 
 <!-- Please leave in the information below -->
