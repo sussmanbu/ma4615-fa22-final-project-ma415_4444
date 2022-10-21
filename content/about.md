@@ -16,11 +16,7 @@ The members of this team are below.
 Xingru is a senior majoring in Computer Science and Statistics.  
 
 ##Jingyi Gao
-
-<<<<<<< HEAD
 Jingyi Gao is a senior student at BU majoring in Mathematics.
-=======
-Jingyi Gao is a senior majoring in Mathematics.
 
 ##Zhuoxi Zheng
 
