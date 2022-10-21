@@ -26,4 +26,12 @@ We selected sample from 2015 to 2019.
 
 We started by looking for the patterns for our table. We realized that there are many 0’s inside the column income. Because we want to focus on the relationship between income and education, we decided to remove the rows whose ‘age’ is under 14, which is the legal age to work in the U.S.  
 
+```{r}
+library(tidyverse)
+
+df <- read.csv("/Users/xingru/MA415/ma4615-fa22-final-project-ma415_4444/dataset-ignore/usa_00008.csv")
+
+(df_null <- df %>% filter(AGE >= 14) %>% head(10))
+
+```
 

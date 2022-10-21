@@ -385,6 +385,29 @@ that there are many 0’s inside the column income. Because we want to
 focus on the relationship between income and education, we decided to
 remove the rows whose ‘age’ is under 14, which is the legal age to work
 in the U.S.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>df &lt;- read.csv(&quot;/Users/xingru/MA415/ma4615-fa22-final-project-ma415_4444/dataset-ignore/usa_00008.csv&quot;)
+
+(df_null &lt;- df %&gt;% filter(AGE &gt;= 14) %&gt;% head(10))</code></pre>
+<pre><code>##    YEAR REGION HHINCOME SEX AGE RACE RACED EDUC EDUCD
+## 1  2015     32    52450   1  56    2   200    5    50
+## 2  2015     32    52450   2  61    2   200    7    71
+## 3  2015     32    52450   1  61    2   200    7    71
+## 4  2015     32     8800   2  52    8   802    2    26
+## 5  2015     32    13200   1  84    1   100   10   101
+## 6  2015     32   156000   1  53    1   100   10   101
+## 7  2015     32   156000   2  53    1   100    7    71
+## 8  2015     32   156000   1  16    1   100    4    40
+## 9  2015     32    14000   1  83    1   100    2    25
+## 10 2015     32    43800   2  46    1   100    5    50</code></pre>
 </div>
 
 
