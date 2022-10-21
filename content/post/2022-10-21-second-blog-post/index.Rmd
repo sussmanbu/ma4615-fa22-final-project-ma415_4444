@@ -14,6 +14,9 @@ featuredVideo: ~
 featuredImage: ~
 ---
 
-fdshfdhufhgudhfghfhdoghf
-hello world
-helllooooo
+library(tidyverse)
+
+df <- read.csv("/Users/mac/Desktop/ma415/ma4615-fa22-final-project-ma415_4444/dataset-ignore/usa_00008.csv")
+
+(df_null <- df %>% filter(AGE >= 14) %>% head(10))
+
