@@ -20,3 +20,5 @@ df <- read.csv("/Users/mac/Desktop/ma415/ma4615-fa22-final-project-ma415_4444/da
 
 (df_null <- df %>% filter(AGE >= 14) %>% head(10))
 
+df_null %>% ggplot(aes(x = EDUC, y = HHINCOME)) + geom_boxplot()
+
