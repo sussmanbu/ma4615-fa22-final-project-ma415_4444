@@ -29,7 +29,7 @@ We started by looking for the patterns for our table. We realized that there are
 ```{r}
 library(tidyverse)
 library(readr)
-df <- read_csv("~/Desktop/ma4615-fa22-final-project-ma415_4444/dataset-ignore/usa_00008.csv")
+df <- read_csv("dataset-ignore/usa_00008.csv")
 View(df)
 
 ##filter the variables
