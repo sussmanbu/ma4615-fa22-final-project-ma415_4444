@@ -28,10 +28,19 @@ We started by looking for the patterns for our table. We realized that there are
 
 ```{r}
 library(tidyverse)
+library(readr)
+df <- read.csv("dataset-ignore/usa_00008.csv")
+View(usa_00008)
 
-df <- read.csv("/Users/xingru/MA415/ma4615-fa22-final-project-ma415_4444/dataset-ignore/usa_00008.csv")
+##filter the variables
+df_null <- df %>% filter(AGE >= 14, HHINCOME < 6000000)
 
-(df_null <- df %>% filter(AGE >= 14) %>% head(10))
+##create sample of size 100,000
+options(max.print=999999)
+df_sample <- sample_n(df_null, size=100000)
+
+##plot
+df_sample %>% ggplot(aes(x = as.factor(EDUC), y = HHINCOME)) + geom_boxplot()
 
 ```
 
