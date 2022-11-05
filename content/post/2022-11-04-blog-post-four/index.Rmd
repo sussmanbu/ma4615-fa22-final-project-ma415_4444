@@ -1,0 +1,30 @@
+---
+title: 2022-11-04-blog-post-four
+author: Xingru Chen, Zhuoxi Zheng,    
+date: '2022-11-04'
+slug: []
+categories: []
+tags: []
+description: ~
+toc: yes
+authors: []
+series: []
+lastmod: '2022-11-04T21:15:06-04:00'
+featuredVideo: ~
+featuredImage: ~
+---
+The response variable that we’re interested in is income. The predictor variables are education, age, sex, race, and region. The main predictor variable that we to study is education. We want to fit logistic model since we predict income will increase as education increases, but the growth rate will decrease at some point.
+
+library(tidyverse)
+
+df <- read.csv("dataset-ignore/usa_00008.csv")
+
+##filter the variables
+df_null <- df %>% filter(AGE >= 14, HHINCOME < 6000000)
+
+##create sample of size 100,000
+options(max.print=999999)
+df_sample <- sample_n(df_null, size=100000)
+
+##plot
+df_sample %>% ggplot(aes(x = as.factor(EDUC), y = HHINCOME)) + geom_boxplot()
