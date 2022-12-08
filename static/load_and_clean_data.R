@@ -1,6 +1,10 @@
+install.packages("here")
+library(here)
 library(tidyverse)
+library(dplyr)
 
-loan_data <- read_csv(here::here("dataset", "loan_refusal.csv"))
+##DF1
+incomedata <- read_csv(here::here("dataset-ignore", "income.csv"))
 
 ## CLEAN the data
 loan_data_clean <- loan_data
