@@ -31,116 +31,11 @@ print(ls())
       2. How does gender influence the performance of some variables toward wage?
       
 ## Full Model
-
-
-
-
--------
-
-## Note on Attribution
-
-If you are directly quoting from a source, please make that clear. You can show quotes using `>` like this
-
-```
-> To be or not to be.
-```
-
-> To be or not to be.
-
-Also, make sure to provide a link or citation to where you are quoting from.
-
--------
-
-
-## Rubric: On this page
-
-you will
-
-
-* Introduce what motivates your Data Analysis (DA)
-  * Which variables and relationships are you most interested in?
-```{r q1.1}
-#the relationship between wage and education.
-#what factors can influence one's wage and salary
-```
-  
-  * What questions are you interested in answering?
-```{r q1.2.1 variable: EDUC}
-#relationship between wage and education
-clean_wage %>%
-ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
-
-```
-
+    We aim to build a model that can be used to predict wage. The independent variables we are interested in are education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
+    
+### Raw Model
+    We run the model1 with all variables above included.
 ```{r}
-#creating the factor variables
-
-#EDUC.f
-clean_wage$EDUC.f <- factor(clean_wage$EDUC)
-is.factor(clean_wage$EDUC.f )
-clean_wage$EDUC_new.f <- factor(clean_wage$EDUC_new)
-is.factor(clean_wage$EDUC_new.f )
-
-#SEX.f
-clean_wage$SEX.f <- factor(clean_wage$SEX)
-is.factor(clean_wage$SEX.f)
-
-#MARST.f
-clean_wage$MARST.f <- factor(clean_wage$MARST)
-is.factor(clean_wage$MARST.f)
-
-#SPEAKENG.f
-clean_wage$SPEAKENG_new.f <- factor(clean_wage$SPEAKENG_new)
-is.factor(clean_wage$SPEAKENG_new.f)
-
-#STATE.f
-clean_wage$STATE.f <- factor(clean_wage$STATE)
-is.factor(clean_wage$STATE.f )
-
-
-```
-```
-
-
-```{r}
-suppressPackageStartupMessages(library(tidyverse))
-(lm_mod_educ <-lm(INCWAGE ~ EDUC.f, data = clean_wage))
-```
-
-
-```{r q1.2.2 }
-#relationship between wage and education colored by gender
-clean_wage %>%
-ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot()
-```
-
-```{r AGE}
-library(tidyverse)
-
-clean_wage %>%
-  ggplot(aes(x =AGE, y = INCWAGE)) + geom_smooth()
-```
-```{r}
-clean_wage %>%
-  ggplot(aes(x = AGE, y = INCWAGE, color = as.factor(SEX))) + geom_smooth()
-```
-  
-* Breadth of the DA
-  * Make sure that you ask enough initial questions to explore the different variables in your data.
-  * i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?
-```{r q2}
-#relationship between wage and education colored by gender
-
-
-```
-  
-* Depth of the DA
-  * When you answer one question, usually more questions arise as well. 
-  * The depth of the DA is about coming up with and exploring the answers to these questions, often iterating the process a few times.
-* Modeling and Inference 
-
-  * You should also include some kind of formal statistical model and/or inference. This could be a linear regression, logistic regression, hypothesis testing etc.
-```{r variable.f}
 #creating the factor variables
 
 #EDUC.f
@@ -176,9 +71,11 @@ broom::tidy(lm_mod1) %>%
   select(term, estimate, p.value) %>% 
   mutate(across(where(is.numeric), ~round(., 5))) %>% 
   DT::datatable()
-
 ```
-  
+
+### Final Model
+    By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. The p-value of some categories of ‘state’ are greater than 0.05 so we would analyze this single variable later.
+    Education 01 (nursery school to grade 4) p-value > 0.05 but we keep it because the p-values of other categories (of education) are smaller than 0.05.
 ```{r wage model2}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG_new.f + FAMSIZE + WKSWORK1 + AGE + SHOWER, data = clean_wage)
@@ -188,6 +85,124 @@ broom::tidy(lm_mod2) %>%
   mutate(across(where(is.numeric), ~round(.,))) %>% 
   DT::datatable()
 ```
+    Interpretation based on coefficients: 
+      Education: there’s a turning point at grade 12 (06), negative relationship before grade 12, then positive relationship after grade 12. 
+      Gender: the average wage of females is $4121 lower than males per year.
+      Marriage status: marriage’s wage is $3870 higher than non-marriage per year.
+      English speaking: dummy variable error 
+      Family size: negative relationship $-279 per year
+      Weeks work last year: positive relationship $773 per year
+
+### Coefficient Breakdown
+#### wage ~ education
+```{r variable: EDUC}
+#relationship between wage and education
+clean_wage %>%
+ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
+```
+    We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since 
+    
+##### wage ~ education (by sex)
+```{r variable: EDUC + gender}
+#relationship between wage and education colored by gender
+clean_wage %>%
+ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot()
+```
+
+```{r female/male}
+male_data <- clean_wage %>%
+  filter(SEX==1)
+
+female_data <- clean_wage %>%
+  filter(SEX==2)
+```
+
+```{r EDUC_male}
+suppressPackageStartupMessages(library(tidyverse))
+lm_educ_male <-lm(INCWAGE ~ as.factor(EDUC), data = male_data)
+
+broom::tidy(lm_educ_male) %>%
+  select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(.,))) %>% 
+  DT::datatable()
+```
+
+```{r EDUC_female}
+suppressPackageStartupMessages(library(tidyverse))
+lm_educ_female <-lm(INCWAGE ~ as.factor(EDUC), data = female_data)
+
+broom::tidy(lm_educ_female) %>%
+  select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(.,))) %>% 
+  DT::datatable()
+```
+
+#### wage ~ age (by sex)
+
+```{r q1.2.2 }
+#relationship between wage and education colored by gender
+clean_wage %>%
+ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()
+```
+
+#### wage ~ marital status  (by sex)
+```{r MARST}
+clean_wage %>%
+ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot()
+```
+
+
+
+-------
+
+## Note on Attribution
+
+If you are directly quoting from a source, please make that clear. You can show quotes using `>` like this
+
+```
+> To be or not to be.
+```
+
+> To be or not to be.
+
+Also, make sure to provide a link or citation to where you are quoting from.
+
+-------
+
+
+## Rubric: On this page
+
+you will
+
+
+* Introduce what motivates your Data Analysis (DA)
+  * Which variables and relationships are you most interested in?
+```{r q1.1}
+#the relationship between wage and education.
+#what factors can influence one's wage and salary
+```
+  
+  * What questions are you interested in answering?
+```{r q1.2.1 variable: EDUC}
+#relationship between wage and education
+
+```
+  
+* Breadth of the DA
+  * Make sure that you ask enough initial questions to explore the different variables in your data.
+  * i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?
+```{r q2}
+#relationship between wage and education colored by gender
+
+
+```
+  
+* Depth of the DA
+  * When you answer one question, usually more questions arise as well. 
+  * The depth of the DA is about coming up with and exploring the answers to these questions, often iterating the process a few times.
+* Modeling and Inference 
+
+  * You should also include some kind of formal statistical model and/or inference. This could be a linear regression, logistic regression, hypothesis testing etc.
   
   * Explain the techniques you used for validating your results.
   * Describe the results of your modelling and make sure to give a sense of the uncertainty in your estimates and conclusions.
