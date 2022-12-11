@@ -15,10 +15,27 @@ We describe here our detailed data analysis.
 ```{r}
 library(tidyverse)
 print(getwd())
-data <- read_csv(here::here("dataset/loan_refusal_clean.csv"))
 load(here::here("dataset-ignore/clean_wage.RData"))
 print(ls())
 ```
+
+## Motivation
+    As senior students, we often question ourselves about what we are doing right now. What those 22 years of education could bring us in the future? Money? Fame? We want to be rich but we don’t know if all those years of hard-work could lead to a rich life. Therefore, we want to explore the relationship between wage and education.
+    We also noticed that sexism is a huge issue in society, especially when it comes to wage. So we are also interested in the factors that result in the wage difference in terms of gender.
+    Along the way of exploration, we discovered some interesting variables that may also influence the wage. So we’re going to build models to predict wages based on those variables.
+
+## Breadth and depth of data analysis
+    We are interested in the relationship between wage and variables including education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
+    The questions are trying to answer are:
+      1. What factors are significant to predict one’s wage?
+      2. How does gender influence the performance of some variables toward wage?
+      
+## Full Model
+
+
+
+
+-------
 
 ## Note on Attribution
 
@@ -43,7 +60,8 @@ you will
 * Introduce what motivates your Data Analysis (DA)
   * Which variables and relationships are you most interested in?
 ```{r q1.1}
-#relationship between wage and education.
+#the relationship between wage and education.
+#what factors can influence one's wage and salary
 ```
   
   * What questions are you interested in answering?
@@ -51,17 +69,56 @@ you will
 #relationship between wage and education
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
+
 ```
+
+```{r}
+#creating the factor variables
+
+#EDUC.f
+clean_wage$EDUC.f <- factor(clean_wage$EDUC)
+is.factor(clean_wage$EDUC.f )
+clean_wage$EDUC_new.f <- factor(clean_wage$EDUC_new)
+is.factor(clean_wage$EDUC_new.f )
+
+#SEX.f
+clean_wage$SEX.f <- factor(clean_wage$SEX)
+is.factor(clean_wage$SEX.f)
+
+#MARST.f
+clean_wage$MARST.f <- factor(clean_wage$MARST)
+is.factor(clean_wage$MARST.f)
+
+#SPEAKENG.f
+clean_wage$SPEAKENG_new.f <- factor(clean_wage$SPEAKENG_new)
+is.factor(clean_wage$SPEAKENG_new.f)
+
+#STATE.f
+clean_wage$STATE.f <- factor(clean_wage$STATE)
+is.factor(clean_wage$STATE.f )
+
+
+```
+```
+
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+(lm_mod_educ <-lm(INCWAGE ~ EDUC.f, data = clean_wage))
+```
+
+
 ```{r q1.2.2 }
 #relationship between wage and education colored by gender
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot()
 ```
+
 ```{r AGE}
 library(tidyverse)
 
 clean_wage %>%
-  ggplot(aes(x = AGE, y = INCWAGE)) + geom_smooth()
+  ggplot(aes(x =AGE, y = INCWAGE)) + geom_smooth()
 ```
 ```{r}
 clean_wage %>%
@@ -81,6 +138,7 @@ clean_wage %>%
   * When you answer one question, usually more questions arise as well. 
   * The depth of the DA is about coming up with and exploring the answers to these questions, often iterating the process a few times.
 * Modeling and Inference 
+
   * You should also include some kind of formal statistical model and/or inference. This could be a linear regression, logistic regression, hypothesis testing etc.
 ```{r variable.f}
 #creating the factor variables
@@ -88,6 +146,8 @@ clean_wage %>%
 #EDUC.f
 clean_wage$EDUC.f <- factor(clean_wage$EDUC)
 is.factor(clean_wage$EDUC.f )
+clean_wage$EDUC_new.f <- factor(clean_wage$EDUC_new)
+is.factor(clean_wage$EDUC_new.f )
 
 #SEX.f
 clean_wage$SEX.f <- factor(clean_wage$SEX)
@@ -98,8 +158,8 @@ clean_wage$MARST.f <- factor(clean_wage$MARST)
 is.factor(clean_wage$MARST.f)
 
 #SPEAKENG.f
-clean_wage$SPEAKENG.f <- factor(clean_wage$SPEAKENG)
-is.factor(clean_wage$SPEAKENG.f)
+clean_wage$SPEAKENG_new.f <- factor(clean_wage$SPEAKENG_new)
+is.factor(clean_wage$SPEAKENG_new.f)
 
 #STATE.f
 clean_wage$STATE.f <- factor(clean_wage$STATE)
@@ -108,9 +168,25 @@ is.factor(clean_wage$STATE.f )
 
 ```
 
-```{r wage model}
-summary(lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + OWNERSHP + WKSWORK1 + POVERTY  + AGE, data = clean_wage))
+```{r wage model1}
+suppressPackageStartupMessages(library(tidyverse))
+lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG_new.f + STATE.f + FAMSIZE + WKSWORK1 + AGE + SHOWER, data = clean_wage)
 
+broom::tidy(lm_mod1) %>%
+  select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(., 5))) %>% 
+  DT::datatable()
+
+```
+  
+```{r wage model2}
+suppressPackageStartupMessages(library(tidyverse))
+lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG_new.f + FAMSIZE + WKSWORK1 + AGE + SHOWER, data = clean_wage)
+
+broom::tidy(lm_mod2) %>%
+  select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(.,))) %>% 
+  DT::datatable()
 ```
   
   * Explain the techniques you used for validating your results.
