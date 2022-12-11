@@ -20,21 +20,24 @@ print(ls())
 ```
 
 ## Motivation
-    As senior students, we often question ourselves about what we are doing right now. What those 22 years of education could bring us in the future? Money? Fame? We want to be rich but we don’t know if all those years of hard-work could lead to a rich life. Therefore, we want to explore the relationship between wage and education.
-    We also noticed that sexism is a huge issue in society, especially when it comes to wage. So we are also interested in the factors that result in the wage difference in terms of gender.
-    Along the way of exploration, we discovered some interesting variables that may also influence the wage. So we’re going to build models to predict wages based on those variables.
+As senior students, we often question ourselves about what we are doing right now. What those 22 years of education could bring us in the future? Money? Fame? We want to be rich but we don’t know if all those years of hard-work could lead to a rich life. Therefore, we want to explore the relationship between wage and education.
+
+We also noticed that sexism is a huge issue in society, especially when it comes to wage. So we are also interested in the factors that result in the wage difference in terms of gender.
+
+Along the way of exploration, we discovered some interesting variables that may also influence the wage. So we’re going to build models to predict wages based on those variables.
 
 ## Breadth and depth of data analysis
-    We are interested in the relationship between wage and variables including education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
-    The questions are trying to answer are:
-      1. What factors are significant to predict one’s wage?
-      2. How does gender influence the performance of some variables toward wage?
+We are interested in the relationship between wage and variables including education, sex, age, family size, weeks worked last year, English-speaking ability, marital status, ownership of bathtub or shower, and region.
+
+The questions are trying to answer are:
+1. What factors are significant to predict one’s wage?
+2. How does gender influence the performance of some variables toward wage?
       
 ## Full Model
-    We aim to build a model that can be used to predict wage. The independent variables we are interested in are education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
+We aim to build a model that can be used to predict wage. The independent variables we are interested in are education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
     
 ### Raw Model
-    We run the model1 with all variables above included.
+We run the model1 with all variables above included.
 ```{r}
 #creating the factor variables
 
@@ -74,8 +77,8 @@ broom::tidy(lm_mod1) %>%
 ```
 
 ### Final Model
-    By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. The p-value of some categories of ‘state’ are greater than 0.05 so we would analyze this single variable later.
-    Education 01 (nursery school to grade 4) p-value > 0.05 but we keep it because the p-values of other categories (of education) are smaller than 0.05.
+By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. The p-value of some categories of ‘state’ are greater than 0.05 so we would analyze this single variable later.
+Education 01 (nursery school to grade 4) p-value > 0.05 but we keep it because the p-values of other categories (of education) are smaller than 0.05.
 ```{r wage model2}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG_new.f + FAMSIZE + WKSWORK1 + AGE + SHOWER, data = clean_wage)
@@ -85,13 +88,13 @@ broom::tidy(lm_mod2) %>%
   mutate(across(where(is.numeric), ~round(.,))) %>% 
   DT::datatable()
 ```
-    Interpretation based on coefficients: 
-      Education: there’s a turning point at grade 12 (06), negative relationship before grade 12, then positive relationship after grade 12. 
-      Gender: the average wage of females is $4121 lower than males per year.
-      Marriage status: marriage’s wage is $3870 higher than non-marriage per year.
-      English speaking: dummy variable error 
-      Family size: negative relationship $-279 per year
-      Weeks work last year: positive relationship $773 per year
+Interpretation based on coefficients: 
+Education: there’s a turning point at grade 12 (06), negative relationship before grade 12, then positive relationship after grade 12. 
+Gender: the average wage of females is $4121 lower than males per year.
+Marriage status: marriage’s wage is $3870 higher than non-marriage per year.
+English speaking: dummy variable error 
+Family size: negative relationship $-279 per year
+Weeks work last year: positive relationship $773 per year
 
 ### Coefficient Breakdown
 #### wage ~ education
@@ -100,7 +103,7 @@ broom::tidy(lm_mod2) %>%
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
 ```
-    We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since 
+We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since 
     
 ##### wage ~ education (by sex)
 ```{r variable: EDUC + gender}
