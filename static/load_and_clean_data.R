@@ -42,6 +42,30 @@ wage_data_clean2 <- wage_data_clean2 %>%
                               EDUC == 10 ~ 7,
                                   TRUE ~ 8))
 
+#creating the factor variables 
+#EDUC.f
+clean_wage$EDUC.f <- factor(clean_wage$EDUC)
+is.factor(clean_wage$EDUC.f )
+clean_wage$EDUC_new.f <- factor(clean_wage$EDUC_new)
+is.factor(clean_wage$EDUC_new.f )
+
+#SEX.f
+clean_wage$SEX.f <- factor(clean_wage$SEX)
+is.factor(clean_wage$SEX.f)
+
+#MARST.f
+clean_wage$MARST.f <- factor(clean_wage$MARST)
+is.factor(clean_wage$MARST.f)
+
+#SPEAKENG.f
+clean_wage$SPEAKENG_new.f <- factor(clean_wage$SPEAKENG_new)
+is.factor(clean_wage$SPEAKENG_new.f)
+
+#STATE.f
+clean_wage$STATE.f <- factor(clean_wage$STATE)
+is.factor(clean_wage$STATE.f )
+
+
 
 ##Combine two data frames
 clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
