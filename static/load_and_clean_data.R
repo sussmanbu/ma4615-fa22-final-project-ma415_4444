@@ -27,7 +27,7 @@ wage_data_clean2$MARST <- with(wage_data_clean2, ifelse(MARST == 2, 1,
 ## add new col of SPEAKENG: 0: doesn't speak any; 1: speak well; 2: a little
 wage_data_clean2$SPEAKENG_new <- cut(wage_data_clean2$SPEAKENG,
                                      breaks = c(0, 1, 2, 5, Inf),
-                                     labels = c(0, 1, 1, 1))
+                                     labels = c(0, 1, 1, 2))
 
 ## add new col of EDUC: 0: combined highschool into one
 library(dplyr)

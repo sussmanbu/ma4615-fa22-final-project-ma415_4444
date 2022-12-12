@@ -16,7 +16,7 @@ df <- read_csv("loan_refusal.csv") %>%
 ui <- fluidPage(
 
   # Application title
-  titlePanel("Loan refusal"),
+  titlePanel("Data"),
 
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
