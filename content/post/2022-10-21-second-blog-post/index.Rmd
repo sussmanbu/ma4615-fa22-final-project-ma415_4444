@@ -14,10 +14,6 @@ featuredVideo: ~
 featuredImage: ~
 ---
 
-
-
-
-
 ## Initial Steps:
 
 We decided to use our third dataset: IPUMS USA: household income and education. Besides income (hhincome) and education(educ), we also include age, sex, and and region.
@@ -30,7 +26,7 @@ We started by looking for the patterns for our table. We realized that there are
 library(tidyverse)
 library(readr)
 
-df <- read.csv("/Users/sarazheng/Desktop/ma4615-fa22-final-project-ma415_4444/data-ignore/usa_00008.csv")
+df <- read.csv("/Users/xingru/MA415/ma4615-fa22-final-project-ma415_4444/dataset-ignore/usa_00008.csv")
 
 
 ##filter the variables
