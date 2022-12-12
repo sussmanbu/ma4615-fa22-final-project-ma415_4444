@@ -1,5 +1,5 @@
 ---
-title: 2022-11-11-fifth-blog-post
+title: Fifth Blog Post
 author: Xingru Chen, Zhuoxi Zheng, Tonng Cheng, Jingyi Gao
 date: '2022-11-11'
 slug: []
