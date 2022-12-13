@@ -183,8 +183,23 @@ server <- function(input, output, session) {
     sign <- "$."
     explain3 <- "And the Poverty Rate is: "
     pr <- selection$POVERTY
-    paste(explain,percentage,a,name,explain2,income,sign,explain3,pr,a,name)
-  })
+    paste(
+  
+      
+    
+    "<ul>
+    <li><strong> <span style = \'font-weight: 700;\'> College Completion Rate:  </span> </strong> 
+        <strong> <span style = \'font-weight: 500;\'> ",percentage, "</span> </strong>
+           </li>
+    <li><strong> <span style = \'font-weight: 700;\'> Poverty Rate: </span> </strong> 
+        <strong> <span style = \'font-weight: 500;\'> ",pr, "</span> </strong> </li>
+     <li><strong> <span style = \'font-weight: 700;\'> Medium Income: </span> </strong> 
+        <strong> <span style = \'font-weight: 500;\'> ",income, "</span> </strong> </li>     
+    </ul>"
+    ,sep = '')
+  }
+    
+  )
   
   observeEvent(input$map_shape_click, {
     click_count <<- click_count+1
