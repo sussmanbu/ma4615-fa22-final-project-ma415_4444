@@ -22,12 +22,12 @@ wage_data_clean2 <-
 
 ## change marriage status into 2 stages: married:1 unmarried:0
 wage_data_clean2$MARST <- with(wage_data_clean2, ifelse(MARST == 2, 1,
-                                                 ifelse(MARST == 1, 1, 0)))
+                                                        ifelse(MARST == 1, 1, 0)))
 
 ## add new col of SPEAKENG: 0: doesn't speak any; 1: speak well; 2: a little
-wage_data_clean2$SPEAKENG_new <- cut(wage_data_clean2$SPEAKENG,
-                                     breaks = c(0, 1, 2, 5, Inf),
-                                     labels = c(0, 1, 1, 2))
+wage_data_clean2$SPEAKENG <- cut(wage_data_clean2$SPEAKENG,
+                                 breaks = c(0, 1, 2, 5, Inf),
+                                 labels = c(0, 1, 1, 2))
 
 ## add new col of EDUC: 0: combined highschool into one
 library(dplyr)
@@ -40,7 +40,16 @@ wage_data_clean2 <- wage_data_clean2 %>%
                               EDUC == 8 ~ 5,
                               EDUC == 9 ~ 6,
                               EDUC == 10 ~ 7,
-                                  TRUE ~ 8))
+                              TRUE ~ 8))
+## remove unnecessary columns
+library(dplyr)
+wage_data_clean2 <- wage_data_clean2 %>%
+  dplyr::select(-c(OWNERSHPD))%>%
+  dplyr::select(-c(EDUCD))
+
+##Combine two data frames
+clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
+
 
 #creating the factor variables 
 #EDUC.f
@@ -58,17 +67,15 @@ clean_wage$MARST.f <- factor(clean_wage$MARST)
 is.factor(clean_wage$MARST.f)
 
 #SPEAKENG.f
-clean_wage$SPEAKENG_new.f <- factor(clean_wage$SPEAKENG_new)
-is.factor(clean_wage$SPEAKENG_new.f)
+clean_wage$SPEAKENG.f <- factor(clean_wage$SPEAKENG)
+is.factor(clean_wage$SPEAKENG.f)
 
 #STATE.f
 clean_wage$STATE.f <- factor(clean_wage$STATE)
 is.factor(clean_wage$STATE.f )
 
-
-
-##Combine two data frames
-clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
+write_csv(wage_data_clean2, file = here::here("dataset", "wage_data_clean2.csv"))
+save(wage_data_clean2, file = here::here("dataset/wage_data_clean2.RData"))
 
 write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
 save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))

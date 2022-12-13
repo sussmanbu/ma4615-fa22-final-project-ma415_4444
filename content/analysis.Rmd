@@ -1,10 +1,13 @@
 ---
-title: Analysis
-description:
-toc: true
-featuredVideo:
+title: "Analysis"
+description: null
+toc: yes
+output:
+html_document:
+df_print: paged
 featuredImage: https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg
-draft: false
+draft: no
+featuredVideo: null
 ---
 
 This comes from the file `content/analysis.Rmd`.
@@ -16,6 +19,7 @@ We describe here our detailed data analysis.
 library(tidyverse)
 print(getwd())
 load(here::here("dataset-ignore/clean_wage.RData"))
+load(here::here("dataset/wage_data_clean2.RData"))
 print(ls())
 ```
 
@@ -32,62 +36,61 @@ We are interested in the relationship between wage and variables including educa
 The questions are trying to answer are:
 1. What factors are significant to predict one’s wage?
 2. How does gender influence the performance of some variables toward wage?
-      
+
+## correlation matrix
+We ran a Correlation Matrix to see if there are any highly correlated variables. OWNERSHIP ~ SHOWER caught our eyes so we decided to drop SHOWER because the correlation rate of “shower” and other variables are quite high. 
+
+```{r correlation matrix}
+install.packages("GGally",repos = "http://cran.us.r-project.org")
+library(GGally)
+wage_data_clean2 %>%
+ggcorr(method = c("everything", "pearson")) 
+
+```
+
 ## Full Model
 We aim to build a model that can be used to predict wage. The independent variables we are interested in are education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
     
 ### Raw Model
 We run the model1 with all variables above included.
-```{r}
-#creating the factor variables
-
-#EDUC.f
-clean_wage$EDUC.f <- factor(clean_wage$EDUC)
-is.factor(clean_wage$EDUC.f )
-clean_wage$EDUC_new.f <- factor(clean_wage$EDUC_new)
-is.factor(clean_wage$EDUC_new.f )
-
-#SEX.f
-clean_wage$SEX.f <- factor(clean_wage$SEX)
-is.factor(clean_wage$SEX.f)
-
-#MARST.f
-clean_wage$MARST.f <- factor(clean_wage$MARST)
-is.factor(clean_wage$MARST.f)
-
-#SPEAKENG.f
-clean_wage$SPEAKENG_new.f <- factor(clean_wage$SPEAKENG_new)
-is.factor(clean_wage$SPEAKENG_new.f)
-
-#STATE.f
-clean_wage$STATE.f <- factor(clean_wage$STATE)
-is.factor(clean_wage$STATE.f )
-
-
-```
 
 ```{r wage model1}
-suppressPackageStartupMessages(library(tidyverse))
-lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG_new.f + STATE.f + FAMSIZE + WKSWORK1 + AGE + SHOWER, data = clean_wage)
+library(tidyverse)
+lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + WKSWORK1 + AGE, data = clean_wage)
 
 broom::tidy(lm_mod1) %>%
-  select(term, estimate, p.value) %>% 
+  dplyr::select(term, estimate, p.value) %>% 
   mutate(across(where(is.numeric), ~round(., 5))) %>% 
   DT::datatable()
 ```
 
-### Final Model
 By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. The p-value of some categories of ‘state’ are greater than 0.05 so we would analyze this single variable later.
 Education 01 (nursery school to grade 4) p-value > 0.05 but we keep it because the p-values of other categories (of education) are smaller than 0.05.
+
+#### BACKWARD STEPWISE REGRESSION
+We ran a BACKWARD STEPWISE REGRESSION and figured that all the variables are significant in our model.
+
+```{r backward stepwise regression}
+library(MASS)
+backward <- step(lm_mod1, direction = "backward", scope = formula(lm_mod1), trace = 0)
+backward$anova
+backward$coefficients
+summary(backward)
+```
+
+
+### Final Model
+
 ```{r wage model2}
 suppressPackageStartupMessages(library(tidyverse))
-lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG_new.f + FAMSIZE + WKSWORK1 + AGE + SHOWER, data = clean_wage)
+lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + WKSWORK1 + AGE, data = clean_wage)
 
 broom::tidy(lm_mod2) %>%
-  select(term, estimate, p.value) %>% 
-  mutate(across(where(is.numeric), ~round(.,))) %>% 
+   dplyr::select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(., 5))) %>% 
   DT::datatable()
 ```
+
 Interpretation based on coefficients: 
 Education: there’s a turning point at grade 12 (06), negative relationship before grade 12, then positive relationship after grade 12. 
 Gender: the average wage of females is $4121 lower than males per year.
@@ -98,7 +101,17 @@ Weeks work last year: positive relationship $773 per year
 
 ### Coefficient Breakdown
 #### wage ~ education
-```{r variable: EDUC}
+```{r variable: EDUC graph model}
+suppressPackageStartupMessages(library(tidyverse))
+lm_mod3 <-lm(INCWAGE ~ EDUC.f, data = clean_wage)
+
+broom::tidy(lm_mod3) %>%
+   dplyr::select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(., 5))) %>% 
+  DT::datatable()
+```
+
+```{r variable: EDUC  graph}
 #relationship between wage and education
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
@@ -106,11 +119,32 @@ ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
 We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since 
     
 ##### wage ~ education (by sex)
+
+
 ```{r variable: EDUC + gender}
 #relationship between wage and education colored by gender
-clean_wage %>%
-ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot()
+
+library(ggplot2)
+library(tidyr)
+clean_wage %>% 
+  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)
 ```
+
+```{r variable: EDUC + gender + EDUC*gender}
+edu_gd <- lm(INCWAGE ~ EDUC.f + SEX.f + EDUC.f*SEX.f, data = clean_wage)
+
+broom::tidy(edu_gd) %>%
+   dplyr::select(term, estimate, p.value) %>% 
+  mutate(across(where(is.numeric), ~round(., 5))) %>% 
+  DT::datatable()
+
+```
+
+```{r QQ}
+par(mfrow = c(2, 2))
+plot(lm_mod3)
+```
+
 
 ```{r female/male}
 male_data <- clean_wage %>%
@@ -125,7 +159,7 @@ suppressPackageStartupMessages(library(tidyverse))
 lm_educ_male <-lm(INCWAGE ~ as.factor(EDUC), data = male_data)
 
 broom::tidy(lm_educ_male) %>%
-  select(term, estimate, p.value) %>% 
+  dplyr::select(term, estimate, p.value) %>% 
   mutate(across(where(is.numeric), ~round(.,))) %>% 
   DT::datatable()
 ```
@@ -135,7 +169,7 @@ suppressPackageStartupMessages(library(tidyverse))
 lm_educ_female <-lm(INCWAGE ~ as.factor(EDUC), data = female_data)
 
 broom::tidy(lm_educ_female) %>%
-  select(term, estimate, p.value) %>% 
+   dplyr::select(term, estimate, p.value) %>% 
   mutate(across(where(is.numeric), ~round(.,))) %>% 
   DT::datatable()
 ```
@@ -145,7 +179,7 @@ broom::tidy(lm_educ_female) %>%
 ```{r q1.2.2 }
 #relationship between wage and education colored by gender
 clean_wage %>%
-ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()
+ggplot(aes(x = AGE*AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()
 ```
 
 #### wage ~ marital status  (by sex)
