@@ -15,15 +15,11 @@ This is a website for the final project for MA[46]15 Data Science with R by Team
 Xingru is a senior majoring in Computer Science and Statistics.\
 GitHub: <https://github.com/xingru88>
 
-<<<<<<< HEAD
-##Jingyi Gao
-Jingyi Gao is a senior student at BU majoring in Mathematics.
-=======
-## Jingyi Gao
 
-Jingyi Gao is a senior majoring in Mathematics. \
+## Jingyi Gao
+Jingyi Gao is a senior student at BU majoring in Mathematics.\
 Github: <https://github.com/Amber-Gao104>
->>>>>>> d12b4937e956013b9351c18ca57ec73d7023d35c
+
 
 ## Zhuoxi Zheng
 
