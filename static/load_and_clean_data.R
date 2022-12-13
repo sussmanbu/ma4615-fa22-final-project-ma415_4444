@@ -77,5 +77,8 @@ is.factor(clean_wage$STATE.f )
 write_csv(wage_data_clean2, file = here::here("dataset", "wage_data_clean2.csv"))
 save(wage_data_clean2, file = here::here("dataset/wage_data_clean2.RData"))
 
+write_csv(state_data, file = here::here("dataset", "state_data.csv"))
+save(state_data, file = here::here("dataset/state_data.RData"))
+
 write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
 save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))
