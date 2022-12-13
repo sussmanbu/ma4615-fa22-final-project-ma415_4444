@@ -1,0 +1,13 @@
+name: example
+title: example
+username:
+account: xchen23
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7880391
+bundleId: 6629799
+url: https://xchen23.shinyapps.io/example/
+when: 1670900546.6521
+lastSyncTime: 1670900546.65211
+asMultiple: FALSE
+asStatic: FALSE
