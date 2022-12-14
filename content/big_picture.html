@@ -14,7 +14,6 @@ draft: false
 
 <p>This comes from the file <code>content/big_picture.Rmd</code>.</p>
 <p>Think of this page as your 538/Upshot style article. This means that you should try to tell a story through the data and your analysis. Read articles from those sites and similar sites to get a feeling for what they are like. Importantly, these should be geared towards the general public. You shouldn’t assume the reader understands how to interpret a linear regression. Focus on interpretation and visualizations.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -23,11 +22,7 @@ draft: false
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>print(getwd())</code></pre>
 <pre><code>## [1] &quot;/Users/sarazheng/Desktop/MA415/ma4615-fa22-final-project-ma415_4444/content&quot;</code></pre>
-<pre class="r"><code>load(here::here(&quot;dataset-ignore/clean_wage.RData&quot;))
-load(here::here(&quot;dataset/state_data.RData&quot;))
-print(ls())</code></pre>
 <pre><code>## [1] &quot;clean_wage&quot; &quot;state_data&quot;</code></pre>
 <div id="why-do-we-have-to-receive-education" class="section level2">
 <h2>Why do we have to receive education?</h2>
@@ -35,25 +30,16 @@ print(ls())</code></pre>
 <p>I’m sure most parents have said to their children, “You have to study hard, learn more, and grow more, so that when you grow up you can find a good job and earn a lot of money.”</p>
 <div id="q-is-that-really-the-case-specifically-could-higher-degrees-of-education-help-us-to-get-a-better-job-and-earn-more-money" class="section level3">
 <h3>Q: Is that really the case? Specifically, could higher degrees of education help us to get a better job and earn more money?</h3>
-<pre class="r"><code>library(ggplot2)
-library(tidyr)
-clean_wage %&gt;% ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()</code></pre>
 <p><img src="/big_picture_files/figure-html/q1-1.png" width="672" /></p>
 <p>Overall, it is true that the more education you get, the more money you can make. The above plot is a box plot, indicating how much you can make with certain years of education. The fat box-shape parts of the graph represent the majority of the people (75%), so we will look into only the range of the box-shape parts. We can see that across all years of education, wages start from 0. However, the upper limits of each boxplot show some trends. From “no schooling”(0) to “Grade 10”(4), the upper limits keep decreasing, from about 15,000 to almost 0, which is very interesting because does that mean we should not go to school at all if we will stop schooling at Grade 10. Then starting from “Grade 10”, the upper limits of the boxes keep increasing until 5+ years of college (11), from about 0 all the way to more than 60,000. Surprisingly, there is a huge gap between Grade 11 (5) to Grade 12 (6), from about 0 to almost 30,000. It might be suggesting that a high school degree is important to make money, and a college degree could help even more with making money.</p>
 </div>
 <div id="q-does-gender-have-an-influence-on-the-wage-although-the-education-level-is-the-same" class="section level3">
 <h3>Q: Does gender have an influence on the wage although the education level is the same?</h3>
-<pre class="r"><code>library(ggplot2)
-library(tidyr)
-clean_wage %&gt;%  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)</code></pre>
 <p><img src="/big_picture_files/figure-html/q2-1.png" width="672" /></p>
 <p>Sadly, women make less money than men with the same years of education in general. The above is a box plot. If we look at the upper limit of each box plot again, we can see that the difference between the wage of men and that of women is extremely large. There is about a 15,000 gap in each year of college, indicating that a woman makes $15,000 less than a man even with the same degree of education. The gap only seems less large with 5+ years of college (11), which means women need to study way harder to fight for the same amount of resources and money against men.</p>
 </div>
 <div id="q-despite-being-educated-how-much-age-can-influence-wages." class="section level3">
 <h3>Q: Despite being educated, how much AGE can influence wages.</h3>
-<pre class="r"><code>library(ggplot2)
-library(tidyr)
-clean_wage %&gt;% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="/big_picture_files/figure-html/q3-1.png" width="672" /></p>
 <p>The above graph demonstrates the wage distribution in terms of age with different genders. We can see that for both genders, the wage increases until the age of 35 and remains the same. It starts to decrease at age 50 and slows down the rate of decrease at about age 70. Therefore, we can call age 18 - 35 the golden time of making money, then 35 - 50 is the time to settle down and save the money for retirement. Additionally, we can still see a huge gap between genders acrossing all ages, where the gap is astonishingly large at age 35 - 50.</p>
@@ -61,10 +47,6 @@ clean_wage %&gt;% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom
 </div>
 <div id="q-what-about-marriage" class="section level3">
 <h3>Q: What about marriage?</h3>
-<pre class="r"><code>library(ggplot2)
-library(tidyr)
-clean_wage %&gt;%
-ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title=&quot;Marital Status vs. Wage&quot;, x=&quot;Marital Status&quot;, y=&quot;Wage&quot;)</code></pre>
 <p><img src="/big_picture_files/figure-html/q4-1.png" width="672" /></p>
 <p>Here is a box plot demonstrating the wage made by single/never married (0) and married (1). It can be found that married people can make more money than singles. We cannot tell if people can make more money after marriage, probably benefiting from government policy, or if only rich people choose to get married under this economy</p>
 </div>
