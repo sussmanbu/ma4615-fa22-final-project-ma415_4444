@@ -56,7 +56,7 @@ We run the model1 with all variables above included.
 
 ```{r wage model1}
 library(tidyverse)
-lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + WKSWORK1 + AGE, data = clean_wage)
+lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + AGE, data = clean_wage)
 
 broom::tidy(lm_mod1) %>%
   dplyr::select(term, estimate, p.value) %>% 
@@ -83,7 +83,7 @@ summary(backward)
 
 ```{r wage model2}
 suppressPackageStartupMessages(library(tidyverse))
-lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + WKSWORK1 + AGE, data = clean_wage)
+lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + Age, data = clean_wage)
 
 broom::tidy(lm_mod2) %>%
    dplyr::select(term, estimate, p.value) %>% 
@@ -91,13 +91,8 @@ broom::tidy(lm_mod2) %>%
   DT::datatable()
 ```
 
-Interpretation based on coefficients: 
-Education: there’s a turning point at grade 12 (06), negative relationship before grade 12, then positive relationship after grade 12. 
-Gender: the average wage of females is $4121 lower than males per year.
-Marriage status: marriage’s wage is $3870 higher than non-marriage per year.
-English speaking: dummy variable error 
-Family size: negative relationship $-279 per year
-Weeks work last year: positive relationship $773 per year
+Our final model enables us to use variables including years of education, marital status, ability to speak English, family size and age to predict one’s wage. 
+
 
 ### Coefficient Breakdown
 #### wage ~ education
@@ -116,7 +111,7 @@ broom::tidy(lm_mod3) %>%
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
 ```
-We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since 
+We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since level 6, which is grade 12, one's wage increases as education level increase.
     
 ##### wage ~ education (by sex)
 
@@ -129,6 +124,7 @@ library(tidyr)
 clean_wage %>% 
   ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)
 ```
+From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
 
 ```{r variable: EDUC + gender + EDUC*gender}
 edu_gd <- lm(INCWAGE ~ EDUC.f + SEX.f + EDUC.f*SEX.f, data = clean_wage)
@@ -139,6 +135,7 @@ broom::tidy(edu_gd) %>%
   DT::datatable()
 
 ```
+
 
 ```{r QQ}
 par(mfrow = c(2, 2))
@@ -174,20 +171,26 @@ broom::tidy(lm_educ_female) %>%
   DT::datatable()
 ```
 
+From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
+
 #### wage ~ age (by sex)
 
 ```{r q1.2.2 }
 #relationship between wage and education colored by gender
 clean_wage %>%
-ggplot(aes(x = AGE*AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()
+ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth() + labs(title="Age vs. Wage", x="Age", y="Wage")
 ```
+Wage increases as age increase from 14 to 30, and then decreases. 
 
 #### wage ~ marital status  (by sex)
-```{r MARST}
+```{r MARST graphT}
 clean_wage %>%
-ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot()
+ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")
 ```
+Generally speaking, married people are more likely to have higher wages. However, we can clearly find the gender differences in terms of marriage. The wage gap between male and female is much larger for those who are married compared to not married. Therefore, it’s reasonable to assume that being married is associated with higher earnings, but its effect on male is much more significant than on female. 
 
+## Conclusion 
+We provides a model that can help us to use years of education, marital status, ability to speak English, family size and age to predict one’s wage to predict one's wage. 
 
 
 -------
