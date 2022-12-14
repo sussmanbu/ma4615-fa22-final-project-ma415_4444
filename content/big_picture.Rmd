@@ -76,7 +76,7 @@ According to our analysis, our parents are correct. Years of education can indee
 Here is our interactive page, which will provide you with a more concrete understanding of our analysis.
 
 #Interactive
-In order to understand this analysis and explore the income, educational level and poverty rate interaction, you can view our own explorer here.
+In order to understand this analysis and explore the income, educational level and poverty rate interaction, you can view our own explorer: https://xchen23.shinyapps.io/example/
 This interactive feature allows you to select a certain state in the U.S. map, and by double clicking the area you want to learn, the information about a state's median income, college completion rate and poverty rate will be popped up. It will be a great tool for us to learn about the general behavior of a certain state. 
 
 ---
