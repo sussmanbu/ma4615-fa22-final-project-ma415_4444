@@ -7,9 +7,110 @@ featuredImage: images/data-import-cheatsheet-thumbs.png
 draft: false
 ---
 
-
-
 This comes from the file `content/data.Rmd`.
+
+```{r}
+source(
+  here::here("static", "load_and_clean_data.R"),
+  echo = TRUE # Use echo=FALSE or omit it to avoid code output  
+)
+```
+
+## Our data
+
+### Data1
+https://usa.ipums.org/usa/index.shtml 
+U.S Census Data for Social, Economic, And Health Research. IPUMS USA collects, preserves, and harmonizes U.S. census microdata and provides easy access to this data with enhanced documentation. Data includes American Community Surveys (ACS) from 2000 to the present. We specifically selected the data and year we are interested in. 
+
+### Data2
+https://www.ers.usda.gov/data-products/county-level-data-sets/ 
+ERS (Economic Research Service US Department of Agriculture) compiles the latest statistics on these measures and provides maps and data for the U.S. States and counties/county equivalents.
+
+## Our variables
+
+### Dependent Variable
+INCWAGE (Wage and salary income): reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year.	
+
+### Independent Variables
+1. EDUC: indicates respondents' educational attainment, as measured by the highest year of school or degree completed.
+2. SEX (Sex): reports whether the person was male or female.	
+3. OWNERSHP (Ownership of dwelling (tenure) : indicates whether the housing unit was rented or owned by its inhabitants.
+4. SHOWER (Bathtub or shower): indicates whether the housing unit provided access to a permanently-installed bath and/or shower. 
+5. FAMSIZE (Number of own family members in household): counts the number of own family members residing with each individual, including the person her/himself. 
+6. AGE (Age): reports the person's age in years as of the last birthday.
+7. MARST (Marital status): gives each person's current marital status.
+8. SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.	
+9. WKSWORK1 (Weeks worked last year): reports the number of weeks that the respondent worked for profit, pay, or as an unpaid family worker during the previous year.
+10. INCWAGE (Wage and salary income):reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year.	
+11. STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.
+12. POVERTY: percentage of population in poverty in each state, 2020
+13. MHI (Median Household Income): median household income in each state, 2020
+14. CCR (College Completion Rate after 25): reports completing collage, adults 25 and older, 2020
+
+## Clean data
+
+### Data1
+```{r Data1}
+wage_data <- read_csv(here::here("dataset-ignore", "wage.csv")) 
+```
+
+#### INCWAGE
+
+According to the code book, 999999 stands for N/A and 999998 stands for missing, so we drop these values.
+```{r INCWAGE1}
+wage_data_clean1 <- 
+  wage_data %>% 
+  filter(INCWAGE < 999998)
+```
+Then we drop the outliers.
+outlier q0.75+1.5IQR=45000+1.5(45000-0)=112500
+```{r INCWAGE2}
+summary(wage_data_clean1$INCWAGE)
+
+wage_data_clean2 <- 
+  wage_data_clean1 %>% filter(INCWAGE < 112500)
+```
+
+#### MARST
+We changed marriage status into 2 stages: 
+married:1 
+unmarried:0
+```{r MARST}
+wage_data_clean2$MARST <- with(wage_data_clean2, ifelse(MARST == 2, 1,
+                                                        ifelse(MARST == 1, 1, 0)))
+```
+
+#### SPEAKENG
+We changed SPEAKENG into 3 stages: 
+doesn't speak any:0
+speak well:1
+speak a little:2
+```{r SPEAKENG}
+wage_data_clean2$SPEAKENG <- cut(wage_data_clean2$SPEAKENG,
+                                 breaks = c(0, 1, 2, 5, Inf),
+                                 labels = c(0, 1, 1, 2))
+```
+
+## Combining data
+```{r combining}
+clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
+```
+
+## Saving
+```{r write}
+write_csv(wage_data_clean2, file = here::here("dataset", "wage_data_clean2.csv"))
+save(wage_data_clean2, file = here::here("dataset/wage_data_clean2.RData"))
+
+write_csv(state_data, file = here::here("dataset", "state_data.csv"))
+save(state_data, file = here::here("dataset/state_data.RData"))
+
+write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
+save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))
+
+```
+
+
+---
 
 Your first steps in this project will be to find data to work on.
 
