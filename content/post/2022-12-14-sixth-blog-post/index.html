@@ -1,0 +1,92 @@
+---
+title: Sixth Blog Post
+author: Xingru Chen, Zhuoxi Zhen, Jingyi Gao, Cheng Tong
+date: '2022-12-14'
+slug: []
+categories: []
+tags: []
+description: Interactive Ideas
+toc: yes
+authors: []
+series: []
+lastmod: '2022-12-14T18:25:14-05:00'
+featuredVideo: ~
+featuredImage: ~
+---
+
+
+<div id="TOC">
+
+</div>
+
+<div id="ui-and-ux-design" class="section level2">
+<h2>UI and UX Design</h2>
+<p>Because our team possesses a dataset that includes the median income for each state, we would like to construct a map using the Shiny application framework so that it can display our data. A map of the United States that is organized state by state is the model that best represents our ideal map. When we move the mouse over a portion of the graph that corresponds to a state, the average wage in that state is displayed automatically. In addition to this, we would like to color each state’s average income according to its level: states with higher average salaries would have deeper colors, and states with lower average salaries will have lighter colors. After that, you should inquire of the audience things such as, “What do you discover from the graph?” Do you believe that the data distribution accurately reflects the situation in each state as it now stands?</p>
+<p>Building on that, we also can make a map about college completion rate according to each state. States with higher college completion rate would have deeper colors, and states with lower college completion rate will have lighter colors.</p>
+<p>We also have the option of making another interactive map. When you move your mouse over the fields in each state, you’ll also see the annual growth rate of the average wage in that state. This information is presented as the mouse moves over the fields. And the intensity of the color is proportional to the magnitude of the annual growth rate: the higher the growth rate, the deeper the color, and the smaller the growth rate, the lighter the color.</p>
+<p>We have begun the process of putting the Shiny interactive into action, and we have already finished the section where we show the user the median income of each state when they hover over a particular state.</p>
+</div>
+<div id="code-for-shiny" class="section level2">
+<h2>Code for Shiny</h2>
+<pre class="r"><code>library(shiny)
+library(shinycssloaders)
+library(leaflet)
+library(sf)</code></pre>
+<pre><code>## Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages
+## ───────────────────────────────────────
+## tidyverse 1.3.2 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(htmltools)
+library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;
+## 
+## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+## 
+## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code># Build UI
+ui &lt;- fluidPage(
+  tags$style(type=&quot;text/css&quot;,&quot;.shiny-output-error { visibility: hidden; }&quot;,&quot;.shiny-output-error:before { visibility: hidden; }&quot;), 
+  # Application title
+  span(style = &quot;font-weight: 600; font-size: 25px; width: 100%;
+         color: #022DB7;&quot;, &quot;State Income, College Completion Rate, and Poverty Rate&quot;),
+  # Line Breaks
+  br(),br(),
+  # Map
+  fluidRow(
+    column(8, leafletOutput(&quot;map&quot;)
+    ),
+    column(4, 
+           span(style = &quot;font-weight: 600; font-size:18px&quot;,&quot;Select &quot;), span(style=&quot;font-weight: 600; font-size:18px; color:green&quot;, &quot;State&quot;), 
+           span(style = &quot;font-weight: 600; font-size:18px&quot;,&quot; from the map:&quot;),
+           br(),br(),
+           htmlOutput(&quot;name&quot;),
+           br(),br(),
+           htmlOutput(&quot;explanation&quot;),
+           br(),
+           span(),
+           hr()
+    )),
+  br(),br(),
+  hr(),
+  fluidRow(
+    column(5, plotlyOutput(&quot;income_plot&quot;, width = &quot;120%&quot;, height = &quot;400px&quot;)
+    ))
+)</code></pre>
+</div>

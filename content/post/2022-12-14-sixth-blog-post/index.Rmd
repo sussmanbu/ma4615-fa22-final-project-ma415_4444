@@ -1,0 +1,70 @@
+---
+title: Sixth Blog Post
+author: Xingru Chen, Zhuoxi Zhen, Jingyi Gao, Cheng Tong
+date: '2022-12-14'
+slug: []
+categories: []
+tags: []
+description: Interactive Ideas
+toc: yes
+authors: []
+series: []
+lastmod: '2022-12-14T18:25:14-05:00'
+featuredVideo: ~
+featuredImage: ~
+---
+## UI and UX Design 
+Because our team possesses a dataset that includes the median income for each state, we would like to construct a map using the Shiny application framework so that it can display our data. A map of the United States that is organized state by state is the model that best represents our ideal map. When we move the mouse over a portion of the graph that corresponds to a state, the average wage in that state is displayed automatically. In addition to this, we would like to color each state's average income according to its level: states with higher average salaries would have deeper colors, and states with lower average salaries will have lighter colors. After that, you should inquire of the audience things such as, "What do you discover from the graph?" Do you believe that the data distribution accurately reflects the situation in each state as it now stands?
+
+Building on that, we also can make a map about college completion rate according to each state. States with higher college completion rate would have deeper colors, and states with lower college completion rate will have lighter colors.
+
+We also have the option of making another interactive map. When you move your mouse over the fields in each state, you'll also see the annual growth rate of the average wage in that state. This information is presented as the mouse moves over the fields. And the intensity of the color is proportional to the magnitude of the annual growth rate: the higher the growth rate, the deeper the color, and the smaller the growth rate, the lighter the color.
+
+We have begun the process of putting the Shiny interactive into action, and we have already finished the section where we show the user the median income of each state when they hover over a particular state.
+
+## Code for Shiny 
+
+```{r}
+library(shiny)
+library(shinycssloaders)
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(htmltools)
+library(plotly)
+
+
+
+# Build UI
+ui <- fluidPage(
+  tags$style(type="text/css",".shiny-output-error { visibility: hidden; }",".shiny-output-error:before { visibility: hidden; }"), 
+  # Application title
+  span(style = "font-weight: 600; font-size: 25px; width: 100%;
+         color: #022DB7;", "State Income, College Completion Rate, and Poverty Rate"),
+  # Line Breaks
+  br(),br(),
+  # Map
+  fluidRow(
+    column(8, leafletOutput("map")
+    ),
+    column(4, 
+           span(style = "font-weight: 600; font-size:18px","Select "), span(style="font-weight: 600; font-size:18px; color:green", "State"), 
+           span(style = "font-weight: 600; font-size:18px"," from the map:"),
+           br(),br(),
+           htmlOutput("name"),
+           br(),br(),
+           htmlOutput("explanation"),
+           br(),
+           span(),
+           hr()
+    )),
+  br(),br(),
+  hr(),
+  fluidRow(
+    column(5, plotlyOutput("income_plot", width = "120%", height = "400px")
+    ))
+)
+
+```
+
+
