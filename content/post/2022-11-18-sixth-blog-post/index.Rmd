@@ -1,7 +1,7 @@
 ---
 title: Sixth Blog Post
 author: Xingru Chen, Zhuoxi Zhen, Jingyi Gao, Cheng Tong
-date: '2022-12-14'
+date: '2022-11-18'
 slug: []
 categories: []
 tags: []
@@ -9,7 +9,7 @@ description: Interactive Ideas
 toc: yes
 authors: []
 series: []
-lastmod: '2022-12-14T18:25:14-05:00'
+lastmod: '2022-11-20T18:25:14-05:00'
 featuredVideo: ~
 featuredImage: ~
 ---
