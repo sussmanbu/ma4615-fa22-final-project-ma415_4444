@@ -11,6 +11,74 @@ This comes from the file `content/big_picture.Rmd`.
 
 Think of this page as your 538/Upshot style article. This means that you should try to tell a story through the data and your analysis. Read articles from those sites and similar sites to get a feeling for what they are like. Importantly, these should be geared towards the general public. You shouldn't assume the reader understands how to interpret a linear regression. Focus on interpretation and visualizations.
 
+```{r}
+library(tidyverse)
+print(getwd())
+load(here::here("dataset-ignore/clean_wage.RData"))
+load(here::here("dataset/state_data.RData"))
+print(ls())
+```
+
+## Why do we have to receive education? 
+
+On October 11, the Royal Swedish Academy of Sciences announced the three winners of the 2021 Nobel Prize in Economics. Perhaps we all once thought that the Nobel Prize was far away from our life, but this year's Nobel laureates in the field of labor economics used empirical methods in their research to prove many major theories. For example, the more you study, the more money you make.
+
+I'm sure most parents have said to their children, "You have to study hard, learn more, and grow more, so that when you grow up you can find a good job and earn a lot of money."
+
+### Q: Is that really the case? Specifically, could higher degrees of education help us to get a better job and earn more money?
+
+```{r q1}
+library(ggplot2)
+library(tidyr)
+clean_wage %>% ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
+
+```
+
+Overall, it is true that the more education you get, the more money you can make. The above plot is a box plot, indicating how much you can make with certain years of education. The fat box-shape parts of the graph represent the majority of the people (75%), so we will look into only the range of the box-shape parts. We can see that across all years of education, wages start from 0. However, the upper limits of each boxplot show some trends. From  “no schooling”(0) to  “Grade 10”(4), the upper limits keep decreasing, from about 15,000 to almost 0, which is very interesting because does that mean we should not go to school at all if we will stop schooling at Grade 10. Then starting from “Grade 10”, the upper limits of the boxes keep increasing until 5+ years of college (11), from about 0 all the way to more than 60,000. Surprisingly, there is a huge gap between Grade 11 (5) to Grade 12 (6), from about 0 to almost 30,000. It might be suggesting that a high school degree is important to make money, and a college degree could help even more with making money.
+
+### Q: Does gender have an influence on the wage although the education level is the same?
+
+```{r q2}
+library(ggplot2)
+library(tidyr)
+clean_wage %>%  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)
+
+```
+
+Sadly, women make less money than men with the same years of education in general. The above is a box plot. If we look at the upper limit of each box plot again, we can see that the difference between the wage of men and that of women is extremely large. There is about a 15,000 gap in each year of college, indicating that a woman makes $15,000 less than a man even with the same degree of education. The gap only seems less large with 5+ years of college (11), which means women need to study way harder to fight for the same amount of resources and money against men. 
+
+### Q: Despite being educated, how much AGE can influence wages. 
+
+```{r q3}
+library(ggplot2)
+library(tidyr)
+clean_wage %>% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()
+```
+
+The above graph demonstrates the wage distribution in terms of age with different genders. We can see that for both genders, the wage increases until the age of 35 and remains the same. It starts to decrease at age 50 and slows down the rate of decrease at about age 70. Therefore, we can call age 18 - 35 the golden time of making money, then 35 - 50 is the time to settle down and save the money for retirement. Additionally, we can still see a huge gap between genders acrossing all ages, where the gap is astonishingly large at age 35 - 50. 
+
+With the increase of education rate, young generations’ idea of marriage has changed dramatically these years. In the USA, does marriage influence wage and vice versa? 
+
+### Q: What about marriage?
+
+```{r q4}
+library(ggplot2)
+library(tidyr)
+clean_wage %>%
+ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")
+```
+
+Here is a box plot demonstrating the wage made by single/never married (0) and married (1). It can be found that married people can make more money than singles. We cannot tell if people can make more money after marriage, probably benefiting from government policy, or if only rich people choose to get married under this economy
+
+## Conlusion and Discussion
+According to our analysis, our parents are correct. Years of education can indeed help us make more money, but only with high degrees such as high school degree and college degree. Despite that, age is also a very important factor in terms of wage. If someone finished college at 40, it might be harder than a younger one when finding a job with considerable payment. Lastly, gender is still a factor considered in getting paid. Whether this is because of the sexism in the society or just coincidence, this huge gap should be diminished. 
+
+Here is our interactive page, which will provide you with a more concrete understanding of our analysis.
+
+#Interactive
+In order to understand this analysis and explore the income, educational level and poverty rate interaction, you can view our own explorer here.
+This interactive feature allows you to select a certain state in the U.S. map, and by double clicking the area you want to learn, the information about a state's median income, college completion rate and poverty rate will be popped up. It will be a great tool for us to learn about the general behavior of a certain state. 
+
 ---
 
 ## Rubric: On this page

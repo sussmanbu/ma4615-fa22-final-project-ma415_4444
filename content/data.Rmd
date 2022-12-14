@@ -40,12 +40,11 @@ INCWAGE (Wage and salary income): reports each respondent's total pre-tax wage a
 6. AGE (Age): reports the person's age in years as of the last birthday.
 7. MARST (Marital status): gives each person's current marital status.
 8. SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.	
-9. WKSWORK1 (Weeks worked last year): reports the number of weeks that the respondent worked for profit, pay, or as an unpaid family worker during the previous year.
-10. INCWAGE (Wage and salary income):reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year.	
-11. STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.
-12. POVERTY: percentage of population in poverty in each state, 2020
-13. MHI (Median Household Income): median household income in each state, 2020
-14. CCR (College Completion Rate after 25): reports completing collage, adults 25 and older, 2020
+9. INCWAGE (Wage and salary income):reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year.	
+10. STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.
+11. POVERTY: percentage of population in poverty in each state, 2020
+12. MHI (Median Household Income): median household income in each state, 2020
+13. CCR (College Completion Rate after 25): reports completing collage, adults 25 and older, 2020
 
 ## Clean data
 

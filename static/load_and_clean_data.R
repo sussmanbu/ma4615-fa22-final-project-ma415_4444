@@ -45,6 +45,7 @@ wage_data_clean2 <- wage_data_clean2 %>%
 library(dplyr)
 wage_data_clean2 <- wage_data_clean2 %>%
   dplyr::select(-c(OWNERSHPD))%>%
+  dplyr::select(-c(WKSWORK1))%>%
   dplyr::select(-c(EDUCD))
 
 ##Combine two data frames

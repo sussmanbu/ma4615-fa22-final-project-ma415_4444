@@ -73,7 +73,7 @@ draft: false
 ## &gt; library(dplyr)
 ## 
 ## &gt; wage_data_clean2 &lt;- wage_data_clean2 %&gt;% dplyr::select(-c(OWNERSHPD)) %&gt;% 
-## +     dplyr::select(-c(EDUCD))
+## +     dplyr::select(-c(WKSWORK1)) %&gt;% dplyr::select(-c(EDUCD))
 ## 
 ## &gt; clean_wage &lt;- merge(x = wage_data_clean2, y = state_data, 
 ## +     by = &quot;STATEFIP&quot;)
@@ -153,7 +153,6 @@ ERS (Economic Research Service US Department of Agriculture) compiles the latest
 <li>AGE (Age): reports the person’s age in years as of the last birthday.</li>
 <li>MARST (Marital status): gives each person’s current marital status.</li>
 <li>SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.</li>
-<li>WKSWORK1 (Weeks worked last year): reports the number of weeks that the respondent worked for profit, pay, or as an unpaid family worker during the previous year.</li>
 <li>INCWAGE (Wage and salary income):reports each respondent’s total pre-tax wage and salary income - that is, money received as an employee - for the previous year.<br />
 </li>
 <li>STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.</li>
