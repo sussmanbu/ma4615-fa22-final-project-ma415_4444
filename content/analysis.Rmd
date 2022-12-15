@@ -23,14 +23,12 @@ load(here::here("dataset/wage_data_clean2.RData"))
 print(ls())
 ```
 
-## Motivation
 As senior students, we often question ourselves about what we are doing right now. What those 22 years of education could bring us in the future? Money? Fame? We want to be rich but we don’t know if all those years of hard-work could lead to a rich life. Therefore, we want to explore the relationship between wage and education.
 
 We also noticed that sexism is a huge issue in society, especially when it comes to wage. So we are also interested in the factors that result in the wage difference in terms of gender.
 
 Along the way of exploration, we discovered some interesting variables that may also influence the wage. So we’re going to build models to predict wages based on those variables.
 
-## Breadth and depth of data analysis
 We are interested in the relationship between wage and variables including education, sex, age, family size, weeks worked last year, English-speaking ability, marital status, ownership of bathtub or shower, and region.
 
 The questions are trying to answer are:
@@ -40,7 +38,7 @@ The questions are trying to answer are:
 ## correlation matrix
 We ran a Correlation Matrix to see if there are any highly correlated variables. OWNERSHIP ~ SHOWER caught our eyes so we decided to drop SHOWER because the correlation rate of “shower” and other variables are quite high. 
 
-```{r correlation matrix}
+```{r correlation matrix, echo=false}
 install.packages("GGally",repos = "http://cran.us.r-project.org")
 library(GGally)
 wage_data_clean2 %>%
@@ -54,7 +52,7 @@ We aim to build a model that can be used to predict wage. The independent variab
 ### Raw Model
 We run the model1 with all variables above included.
 
-```{r wage model1}
+```{r wage model1, echo=false}
 library(tidyverse)
 lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + AGE, data = clean_wage)
 
@@ -70,7 +68,7 @@ Education 01 (nursery school to grade 4) p-value > 0.05 but we keep it because t
 #### BACKWARD STEPWISE REGRESSION
 We ran a BACKWARD STEPWISE REGRESSION and figured that all the variables are significant in our model.
 
-```{r backward stepwise regression}
+```{r backward stepwise regression, echo=false}
 library(MASS)
 backward <- step(lm_mod1, direction = "backward", scope = formula(lm_mod1), trace = 0)
 backward$anova
@@ -81,7 +79,7 @@ summary(backward)
 
 ### Final Model
 
-```{r wage model2}
+```{r wage model2, echo=false}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + Age, data = clean_wage)
 
@@ -96,7 +94,7 @@ Our final model enables us to use variables including years of education, marita
 
 ### Coefficient Breakdown
 #### wage ~ education
-```{r variable: EDUC graph model}
+```{r variable: EDUC graph model, echo=false}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod3 <-lm(INCWAGE ~ EDUC.f, data = clean_wage)
 
@@ -106,7 +104,7 @@ broom::tidy(lm_mod3) %>%
   DT::datatable()
 ```
 
-```{r variable: EDUC  graph}
+```{r variable: EDUC  graph, echo=false}
 #relationship between wage and education
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
@@ -116,7 +114,7 @@ We noticed that at first, as the year of education increase, the wage is lower c
 ##### wage ~ education (by sex)
 
 
-```{r variable: EDUC + gender}
+```{r variable: EDUC + gender, echo=false}
 #relationship between wage and education colored by gender
 
 library(ggplot2)
@@ -126,7 +124,7 @@ clean_wage %>%
 ```
 From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
 
-```{r variable: EDUC + gender + EDUC*gender}
+```{r variable: EDUC + gender + EDUC*gender, echo=false}
 edu_gd <- lm(INCWAGE ~ EDUC.f + SEX.f + EDUC.f*SEX.f, data = clean_wage)
 
 broom::tidy(edu_gd) %>%
@@ -137,13 +135,13 @@ broom::tidy(edu_gd) %>%
 ```
 
 
-```{r QQ}
+```{r QQ, echo=false}
 par(mfrow = c(2, 2))
 plot(lm_mod3)
 ```
 
 
-```{r female/male}
+```{r female/male, echo=false}
 male_data <- clean_wage %>%
   filter(SEX==1)
 
@@ -151,7 +149,7 @@ female_data <- clean_wage %>%
   filter(SEX==2)
 ```
 
-```{r EDUC_male}
+```{r EDUC_male, echo=false}
 suppressPackageStartupMessages(library(tidyverse))
 lm_educ_male <-lm(INCWAGE ~ as.factor(EDUC), data = male_data)
 
@@ -161,7 +159,7 @@ broom::tidy(lm_educ_male) %>%
   DT::datatable()
 ```
 
-```{r EDUC_female}
+```{r EDUC_female, echo=false}
 suppressPackageStartupMessages(library(tidyverse))
 lm_educ_female <-lm(INCWAGE ~ as.factor(EDUC), data = female_data)
 
@@ -175,7 +173,7 @@ From the graph and interaction analysis, we can find gender does play a role in 
 
 #### wage ~ age (by sex)
 
-```{r q1.2.2 }
+```{r q1.2.2, echo=false }
 #relationship between wage and education colored by gender
 clean_wage %>%
 ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth() + labs(title="Age vs. Wage", x="Age", y="Wage")
@@ -183,7 +181,7 @@ ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth() + labs(t
 Wage increases as age increase from 14 to 30, and then decreases. 
 
 #### wage ~ marital status  (by sex)
-```{r MARST graphT}
+```{r MARST graphT, echo=false}
 clean_wage %>%
 ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")
 ```
