@@ -31,7 +31,7 @@ I'm sure most parents have said to their children, "You have to study hard, lear
 ```{r q1, echo=FALSE}
 library(ggplot2)
 library(tidyr)
-clean_wage %>% ggplot(aes(x = CCR, y = MHI)) + geom_smooth()+ labs(title="College Completion Rate after 25 vs. Median Household Income", x="College Completion Rate after 25", y=" Median Household Income")
+clean_wage %>% ggplot(aes(x = CCR, y = MHI)) + geom_smooth(stat = 'smooth', color = 'Red', method = 'gam', formula = y ~ s(x, bs = "cs"))+ labs(title="College Completion Rate after 25 vs. Median Household Income", x="College Completion Rate after 25", y=" Median Household Income")
 ```
 
 Above is the graph that illustrates the relationship between states' college completion rate and states' median household income. For example, CCR = 0.4 means this state has a 40% college graduation rate for people after age 25. To be generalized, this graph can show the relationship between the income and education level: the CCR increases, MHI increases. 
@@ -60,7 +60,7 @@ But for now, in a broad analysis, we retain that gender differences have an impa
 ```{r q3, echo=FALSE}
 library(ggplot2)
 library(tidyr)
-clean_wage %>% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth()
+clean_wage %>% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth(stat = 'smooth', method = 'gam', formula = y ~ s(x, bs = "cs")) + labs(title="Age vs. Wage", x="Age", y="Wage")
 ```
 
 The above graph demonstrates the wage distribution in terms of age with different genders. We can see that for both genders, the wage increases until the age of 35 and remains the same. It starts to decrease at age 50 and slows down the rate of decrease at about age 70. Therefore, we can call age 18 - 35 the golden time of making money, then 35 - 50 is the time to settle down and save the money for retirement. Additionally, we can still see a huge gap between genders acrossing all ages, where the gap is astonishingly large at age 35 - 50. 
@@ -72,11 +72,19 @@ With the increase of education rate, young generations’ idea of marriage has c
 ```{r q4, echo=FALSE}
 library(ggplot2)
 library(tidyr)
-clean_wage %>%
-ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")
+load(here::here("dataset/average_wage_MARST.RData.RData"))
+average_wage_marst %>%  
+  ggplot(aes(x = as.factor(MARST), y = Mean_wage, fill=as.factor(sex))) + geom_bar(stat = "identity",position = position_dodge()) + labs(title="Marital Status vs. Mean Wage", x="Marital Status", y=" Mean Wage")
 ```
 
-Here is a box plot demonstrating the wage made by single/never married (0) and married (1). It can be found that married people can make more money than singles. We cannot tell if people can make more money after marriage, probably benefiting from government policy, or if only rich people choose to get married under this economy
+The impact of marriage on the employment and wages of the female labor force has been a topic of interest in the academic community. Below is the bar chart showing the relationship between the marital status and their mean wage. 
+
+First, it can be found that married people can make more money than singles. In summary, both the absolute amount of female wages and the level of gender wage gap reflect the effect of marriage on their enhancement and improvement. Both the absolute amount of women's wages and the level of the gender wage gap reflect the raising and improving effect of marriage on them, i.e., the same "marriage lift" in women's wages. It seems logical that there is also a "marital uptick" in women's wages.
+
+Second, we can simply get from the graph that men earn higher average wages than women, regardless of whether they are married or not. Also, marriage has increased the wage gap between women and men, i.e. marriage is not a "blessing" but a "curse".
+
+Our group inferred an explanation for the "marriage curse": first, the transition from single to married might decreases the probability that a woman will be trained , thus reducing the likelihood that she will earn a high wage after marriage. Second, it is marriage that reduces female labor force participation.
+
 
 ## Conlusion and Discussion
 According to our analysis, our parents are correct. Years of education can indeed help us make more money, but only with high degrees such as high school degree and college degree. Despite that, age is also a very important factor in terms of wage. If someone finished college at 40, it might be harder than a younger one when finding a job with considerable payment. Lastly, gender is still a factor considered in getting paid. Whether this is because of the sexism in the society or just coincidence, this huge gap should be diminished. 
