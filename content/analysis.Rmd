@@ -6,7 +6,7 @@ output:
 html_document:
 df_print: paged
 featuredImage: https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg
-draft: noww
+draft: false
 featuredVideo: null
 ---
 
