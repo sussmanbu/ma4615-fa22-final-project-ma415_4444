@@ -49,11 +49,13 @@ wage_data_clean2 <- wage_data_clean2 %>%
   dplyr::select(-c(WKSWORK1))%>%
   dplyr::select(-c(EDUCD))
 
-##Combine two data frames
-clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
 
 ##average wage group by EDUC
 average_wage_educ <- read_csv(here::here("dataset", "average_wage_educ.csv"))
+
+##Combine two data frames
+clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
+
 
 #creating the factor variables 
 #EDUC.f
@@ -97,7 +99,9 @@ write_csv(state_data, file = here::here("dataset", "state_data.csv"))
 save(state_data, file = here::here("dataset/state_data.RData"))
 
 write_csv(average_wage_educ, file=here::here("dataset","average_wage_educ.csv"))
-save(state_data, file = here::here("dataset/average_wage_educ.RData"))
+save(average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))
 
 write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
 save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))
+
+save(state_data, average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))
