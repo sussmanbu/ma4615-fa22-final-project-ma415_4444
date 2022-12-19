@@ -39,7 +39,7 @@ The questions are trying to answer are:
 We ran a Correlation Matrix to see if there are any highly correlated variables. OWNERSHIP ~ SHOWER caught our eyes so we decided to drop SHOWER because the correlation rate of “shower” and other variables are quite high. 
 
 ```{r correlation matrix, echo=false}
-install.packages("GGally",repos = "http://cran.us.r-project.org")
+install.packages("GGally")
 library(GGally)
 wage_data_clean2 %>%
 ggcorr(method = c("everything", "pearson")) 
@@ -47,7 +47,7 @@ ggcorr(method = c("everything", "pearson"))
 ```
 
 ## Full Model
-We aim to build a model that can be used to predict wage. The independent variables we are interested in are education, sex, age, family size, weeks worked last year, english-speaking ability, marital status, ownership of bathtub or shower, and region.
+We aim to build a model that can be used to predict wage. The independent variables we are interested in are education, sex, age, family size, weeks worked last year, English-speaking ability, marital status, ownership of bathtub or shower, and region.
     
 ### Raw Model
 We run the model1 with all variables above included.
@@ -220,7 +220,7 @@ you will
   
   * What questions are you interested in answering?
 ```{r q1.2.1 variable: EDUC}
-#relationship between wage and education
+#the relationship between wage and education
 
 ```
   
@@ -228,7 +228,7 @@ you will
   * Make sure that you ask enough initial questions to explore the different variables in your data.
   * i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?
 ```{r q2}
-#relationship between wage and education colored by gender
+#we explore the relationship between wage and education, colored by gender
 
 
 ```
