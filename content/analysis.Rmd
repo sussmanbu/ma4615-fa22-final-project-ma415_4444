@@ -6,7 +6,7 @@ output:
 html_document:
 df_print: paged
 featuredImage: https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg
-draft: no
+draft: noww
 featuredVideo: null
 ---
 
@@ -15,7 +15,7 @@ This comes from the file `content/analysis.Rmd`.
 We describe here our detailed data analysis.
 
 
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 print(getwd())
 load(here::here("dataset-ignore/clean_wage.RData"))
@@ -62,8 +62,7 @@ broom::tidy(lm_mod1) %>%
   DT::datatable()
 ```
 
-By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. The p-value of some categories of ‘state’ are greater than 0.05 so we would analyze this single variable later.
-Education 01 (nursery school to grade 4) p-value > 0.05 but we keep it because the p-values of other categories (of education) are smaller than 0.05.
+By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. 
 
 #### BACKWARD STEPWISE REGRESSION
 We ran a BACKWARD STEPWISE REGRESSION and figured that all the variables are significant in our model.
@@ -81,7 +80,7 @@ summary(backward)
 
 ```{r wage model2, echo=false}
 suppressPackageStartupMessages(library(tidyverse))
-lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + Age, data = clean_wage)
+lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + AGE, data = clean_wage)
 
 broom::tidy(lm_mod2) %>%
    dplyr::select(term, estimate, p.value) %>% 
@@ -107,7 +106,7 @@ broom::tidy(lm_mod3) %>%
 ```{r variable: EDUC  graph, echo=false}
 #relationship between wage and education
 clean_wage %>%
-ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
+ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()+labs(title="Education vs. Wage", x="Education", y="Wage")
 ```
 We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since level 6, which is grade 12, one's wage increases as education level increase.
     
@@ -120,7 +119,7 @@ We noticed that at first, as the year of education increase, the wage is lower c
 library(ggplot2)
 library(tidyr)
 clean_wage %>% 
-  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)
+  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)+labs(title="Education vs. Wage by gender", x="Education", y="Wage")
 ```
 From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
 
@@ -189,7 +188,6 @@ Generally speaking, married people are more likely to have higher wages. However
 
 ## Conclusion 
 We provides a model that can help us to use years of education, marital status, ability to speak English, family size and age to predict one’s wage to predict one's wage. 
-
 
 -------
 
