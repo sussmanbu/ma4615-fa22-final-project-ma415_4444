@@ -3,6 +3,7 @@ library(tidyverse)
 ##DF1
 wage_data <- read_csv(here::here("dataset-ignore", "wage.csv"))
 
+
 ##DF2
 #CCR: completing college rate (after 25) 2016-2020
 #MHI: Median Household Income (2020)
@@ -48,6 +49,10 @@ wage_data_clean2 <- wage_data_clean2 %>%
   dplyr::select(-c(WKSWORK1))%>%
   dplyr::select(-c(EDUCD))
 
+
+##average wage group by EDUC
+average_wage_educ <- read_csv(here::here("dataset", "average_wage_educ.csv"))
+
 ##Combine two data frames
 clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
 
@@ -75,11 +80,28 @@ is.factor(clean_wage$SPEAKENG.f)
 clean_wage$STATE.f <- factor(clean_wage$STATE)
 is.factor(clean_wage$STATE.f )
 
+
+## gender
+male_data <- clean_wage %>%
+  filter(SEX==1)
+
+female_data <- clean_wage %>%
+  filter(SEX==2)
+
+
 write_csv(wage_data_clean2, file = here::here("dataset", "wage_data_clean2.csv"))
 save(wage_data_clean2, file = here::here("dataset/wage_data_clean2.RData"))
 
 write_csv(state_data, file = here::here("dataset", "state_data.csv"))
 save(state_data, file = here::here("dataset/state_data.RData"))
 
+write_csv(state_data, file = here::here("dataset", "state_data.csv"))
+save(state_data, file = here::here("dataset/state_data.RData"))
+
+write_csv(average_wage_educ, file=here::here("dataset","average_wage_educ.csv"))
+save(average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))
+
 write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
 save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))
+
+save(state_data, average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))

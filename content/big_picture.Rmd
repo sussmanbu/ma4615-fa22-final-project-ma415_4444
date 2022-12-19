@@ -16,6 +16,7 @@ library(tidyverse)
 print(getwd())
 load(here::here("dataset-ignore/clean_wage.RData"))
 load(here::here("dataset/state_data.RData"))
+load(here::here("dataset/average_wage_educ.RData"))
 print(ls())
 ```
 
@@ -30,22 +31,29 @@ I'm sure most parents have said to their children, "You have to study hard, lear
 ```{r q1, echo=FALSE}
 library(ggplot2)
 library(tidyr)
-clean_wage %>% ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()
-
+clean_wage %>% ggplot(aes(x = CCR, y = MHI)) + geom_smooth()+ labs(title="College Completion Rate after 25 vs. Median Household Income", x="College Completion Rate after 25", y=" Median Household Income")
 ```
 
-Overall, it is true that the more education you get, the more money you can make. The above plot is a box plot, indicating how much you can make with certain years of education. The fat box-shape parts of the graph represent the majority of the people (75%), so we will look into only the range of the box-shape parts. We can see that across all years of education, wages start from 0. However, the upper limits of each boxplot show some trends. From  “no schooling”(0) to  “Grade 10”(4), the upper limits keep decreasing, from about 15,000 to almost 0, which is very interesting because does that mean we should not go to school at all if we will stop schooling at Grade 10. Then starting from “Grade 10”, the upper limits of the boxes keep increasing until 5+ years of college (11), from about 0 all the way to more than 60,000. Surprisingly, there is a huge gap between Grade 11 (5) to Grade 12 (6), from about 0 to almost 30,000. It might be suggesting that a high school degree is important to make money, and a college degree could help even more with making money.
+Above is the graph that illustrates the relationship between states' college completion rate and states' median household income. For example, CCR = 0.4 means this state has a 40% college graduation rate for people after age 25. To be generalized, this graph can show the relationship between the income and education level: the CCR increases, MHI increases. 
+
+It seems like higher education can have higher wage according to this graph predicts. It is true that college is a barrier to entry for many companies, and having a degree is definitely better than not having one. But the employment activities to be carried out by the university are often services that require a little networking, and it is rare to hear of a college student going into a factory as an assembly line worker, which is certainly not a common phenomenon. in a scenario where the structure of the market is gradually becoming problematic or distorted. Human relations in the service industry can be tasteless as well. There are simple multiple-choice games, or information transparency has devolved into a kind of opaque black box operation. or appears to be fair but, in reality, is not. In such circumstances, a service industry involving the human body may become extremely difficult to enter, which is one of the reasons for the current phenomenon of increasingly high financial thresholds in large cities. For example, the household registration system and so on are obviously contrary to the development of the modern service industry, but why will it become increasingly strong? I am afraid that the logic in the middle of this needs to be carefully sorted out. That is, under the current conditions, the university is probably able to ensure a subsistence level. But there does not seem to be a causal relationship with high incomes. Therefore, we might need further research to see whether there are any other variables that can influence the wage.
+
 
 ### Q: Does gender have an influence on the wage although the education level is the same?
 
 ```{r q2, echo=FALSE}
 library(ggplot2)
 library(tidyr)
-clean_wage %>%  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)
-
+load(here::here("dataset/average_wage_educ.RData"))
+average_wage_educ %>%  
+  ggplot(aes(x = as.factor(EDUC), y = mean_wage, fill=as.factor(sex))) + geom_bar(stat = "identity",position = position_dodge()) + labs(title="Education vs. Mean Wage", x="Education", y=" Mean Wage")
 ```
 
-Sadly, women make less money than men with the same years of education in general. The above is a box plot. If we look at the upper limit of each box plot again, we can see that the difference between the wage of men and that of women is extremely large. There is about a 15,000 gap in each year of college, indicating that a woman makes $15,000 less than a man even with the same degree of education. The gap only seems less large with 5+ years of college (11), which means women need to study way harder to fight for the same amount of resources and money against men. 
+The above is a bar chart to show the relationship between the education level and the mean wage of each state by the factor of male and female.  For our x-axis is the education level, the lower the number of x-axis, the lower the education level. For the factor in gender, we set “1” as male, and “2” as female. 
+
+Sadly, women make less money than men with the same years of education in general. The maximum medium wage gap of male and female is almost 10000 dollor in the education level of “8” which means after both finishing the 2 years of college, male can get higher wage than female. Of course some may question how even in one educational context, which may have been completed at different schools, this may lead to wage differences at the same level of education. This is a very good question, but there is a lack of data collection on the market on this issue, and we would be happy to collect data in a future study if necessary. 
+But for now, in a broad analysis, we retain that gender differences have an impact on wages.
+
 
 ### Q: Despite being educated, how much AGE can influence wages. 
 
