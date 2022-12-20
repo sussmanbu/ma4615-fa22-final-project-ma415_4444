@@ -2,7 +2,7 @@
 title: MA 415 Final Project
 draft: false
 role: Team ma415_4444
-bio: This is my data science project. In this project, we analyzed the influential factors of wage. We mainly focus on education and gender differences.
+bio: This is our data science project. In this project, we analyzed the influential factors of wage. We mainly focus on education and gender differences.
 organization:
   name: Boston University
   url: https://www.bu.edu/
