@@ -1,11 +1,11 @@
 ---
 title: "Analysis"
 description: null
-toc: yes
+toc: true
 output:
 html_document:
 df_print: paged
-featuredImage: https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg
+featuredImage: /images/Analysis_Pic.jpeg
 draft: false
 featuredVideo: null
 ---
@@ -38,8 +38,7 @@ The questions are trying to answer are:
 ## correlation matrix
 We ran a Correlation Matrix to see if there are any highly correlated variables. OWNERSHIP ~ SHOWER caught our eyes so we decided to drop SHOWER because the correlation rate of “shower” and other variables are quite high. 
 
-```{r correlation matrix, echo=false}
-install.packages("GGally")
+```{r correlation matrix, echo=FALSE}
 library(GGally)
 wage_data_clean2 %>%
 ggcorr(method = c("everything", "pearson")) 
@@ -52,7 +51,7 @@ We aim to build a model that can be used to predict wage. The independent variab
 ### Raw Model
 We run the model1 with all variables above included.
 
-```{r wage model1, echo=false}
+```{r wage model1, echo=FALSE}
 library(tidyverse)
 lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + AGE, data = clean_wage)
 
@@ -67,7 +66,7 @@ By looking at the p-value from model1, we decided to drop ‘state’ and run th
 #### BACKWARD STEPWISE REGRESSION
 We ran a BACKWARD STEPWISE REGRESSION and figured that all the variables are significant in our model.
 
-```{r backward stepwise regression, echo=false}
+```{r backward stepwise regression, echo=FALSE}
 library(MASS)
 backward <- step(lm_mod1, direction = "backward", scope = formula(lm_mod1), trace = 0)
 backward$anova
@@ -78,7 +77,7 @@ summary(backward)
 
 ### Final Model
 
-```{r wage model2, echo=false}
+```{r wage model2, echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + AGE, data = clean_wage)
 
@@ -93,7 +92,7 @@ Our final model enables us to use variables including years of education, marita
 
 ### Coefficient Breakdown
 #### wage ~ education
-```{r variable: EDUC graph model, echo=false}
+```{r variable: EDUC graph model, echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod3 <-lm(INCWAGE ~ EDUC.f, data = clean_wage)
 
@@ -103,7 +102,7 @@ broom::tidy(lm_mod3) %>%
   DT::datatable()
 ```
 
-```{r variable: EDUC  graph, echo=false}
+```{r variable: EDUC  graph, echo=FALSE}
 #relationship between wage and education
 clean_wage %>%
 ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()+labs(title="Education vs. Wage", x="Education", y="Wage")
@@ -113,7 +112,7 @@ We noticed that at first, as the year of education increase, the wage is lower c
 ##### wage ~ education (by sex)
 
 
-```{r variable: EDUC + gender, echo=false}
+```{r variable: EDUC + gender, echo=FALSE}
 #relationship between wage and education colored by gender
 
 library(ggplot2)
@@ -123,7 +122,7 @@ clean_wage %>%
 ```
 From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
 
-```{r variable: EDUC + gender + EDUC*gender, echo=false}
+```{r variable: EDUC + gender + EDUC*gender, echo=FALSE}
 edu_gd <- lm(INCWAGE ~ EDUC.f + SEX.f + EDUC.f*SEX.f, data = clean_wage)
 
 broom::tidy(edu_gd) %>%
@@ -134,13 +133,13 @@ broom::tidy(edu_gd) %>%
 ```
 
 
-```{r QQ, echo=false}
+```{r QQ, echo=FALSE}
 par(mfrow = c(2, 2))
 plot(lm_mod3)
 ```
 
 
-```{r female/male, echo=false}
+```{r female/male, echo=FALSE}
 male_data <- clean_wage %>%
   filter(SEX==1)
 
@@ -148,7 +147,7 @@ female_data <- clean_wage %>%
   filter(SEX==2)
 ```
 
-```{r EDUC_male, echo=false}
+```{r EDUC_male, echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 lm_educ_male <-lm(INCWAGE ~ as.factor(EDUC), data = male_data)
 
@@ -158,7 +157,7 @@ broom::tidy(lm_educ_male) %>%
   DT::datatable()
 ```
 
-```{r EDUC_female, echo=false}
+```{r EDUC_female, echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 lm_educ_female <-lm(INCWAGE ~ as.factor(EDUC), data = female_data)
 
@@ -172,7 +171,7 @@ From the graph and interaction analysis, we can find gender does play a role in 
 
 #### wage ~ age (by sex)
 
-```{r q1.2.2, echo=false }
+```{r q1.2.2, echo=FALSE }
 #relationship between wage and education colored by gender
 clean_wage %>%
 ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth() + labs(title="Age vs. Wage", x="Age", y="Wage")
@@ -180,7 +179,7 @@ ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth() + labs(t
 Wage increases as age increase from 14 to 30, and then decreases. 
 
 #### wage ~ marital status  (by sex)
-```{r MARST graphT, echo=false}
+```{r MARST graphT, echo=FALSE}
 clean_wage %>%
 ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")
 ```

@@ -3,7 +3,7 @@ title: Data
 description:
 toc: true
 featuredVideo:
-featuredImage: images/data-import-cheatsheet-thumbs.png
+featuredImage: images/Data_Pic.png
 draft: false
 ---
 
@@ -75,6 +75,28 @@ draft: false
 ## &gt; wage_data_clean2 &lt;- wage_data_clean2 %&gt;% dplyr::select(-c(OWNERSHPD)) %&gt;% 
 ## +     dplyr::select(-c(WKSWORK1)) %&gt;% dplyr::select(-c(EDUCD))
 ## 
+## &gt; average_wage_educ &lt;- read_csv(here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_educ.csv&quot;))</code></pre>
+<pre><code>## Rows: 22 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (3): EDUC, mean_wage, sex
+## lgl (2): ...4, ...5
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## 
+## &gt; average_wage_marst &lt;- read_csv(here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_MARST.csv&quot;))</code></pre>
+<pre><code>## Rows: 4 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): MARST
+## dbl (2): Mean_wage, sex
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## 
 ## &gt; clean_wage &lt;- merge(x = wage_data_clean2, y = state_data, 
 ## +     by = &quot;STATEFIP&quot;)
 ## 
@@ -108,6 +130,10 @@ draft: false
 ## &gt; is.factor(clean_wage$STATE.f)
 ## [1] TRUE
 ## 
+## &gt; male_data &lt;- clean_wage %&gt;% filter(SEX == 1)
+## 
+## &gt; female_data &lt;- clean_wage %&gt;% filter(SEX == 2)
+## 
 ## &gt; write_csv(wage_data_clean2, file = here::here(&quot;dataset&quot;, 
 ## +     &quot;wage_data_clean2.csv&quot;))
 ## 
@@ -118,10 +144,27 @@ draft: false
 ## 
 ## &gt; save(state_data, file = here::here(&quot;dataset/state_data.RData&quot;))
 ## 
+## &gt; write_csv(state_data, file = here::here(&quot;dataset&quot;, 
+## +     &quot;state_data.csv&quot;))
+## 
+## &gt; save(state_data, file = here::here(&quot;dataset/state_data.RData&quot;))
+## 
+## &gt; write_csv(average_wage_educ, file = here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_educ.csv&quot;))
+## 
+## &gt; save(average_wage_educ, file = here::here(&quot;dataset/average_wage_educ.RData&quot;))
+## 
 ## &gt; write_csv(clean_wage, file = here::here(&quot;dataset-ignore&quot;, 
 ## +     &quot;clean_wage.csv&quot;))
 ## 
-## &gt; save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))</code></pre>
+## &gt; save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))
+## 
+## &gt; write_csv(average_wage_marst, file = here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_MARST.csv&quot;))
+## 
+## &gt; save(average_wage_marst, file = here::here(&quot;dataset/average_wage_MARST.RData.RData&quot;))
+## 
+## &gt; save(state_data, average_wage_educ, file = here::here(&quot;dataset/average_wage_educ.RData&quot;))</code></pre>
 <div id="our-data" class="section level2">
 <h2>Our data</h2>
 <div id="data1" class="section level3">
