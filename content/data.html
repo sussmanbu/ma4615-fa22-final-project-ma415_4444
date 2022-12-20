@@ -3,7 +3,7 @@ title: Data
 description:
 toc: true
 featuredVideo:
-featuredImage: images/data-import-cheatsheet-thumbs.png
+featuredImage: https://d1y8sb8igg2f8e.cloudfront.net/images/MovingOnUp_copy3_PKViMja.width-800.jpg 
 draft: false
 ---
 
@@ -86,6 +86,17 @@ draft: false
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre><code>## 
+## &gt; average_wage_marst &lt;- read_csv(here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_MARST.csv&quot;))</code></pre>
+<pre><code>## Rows: 4 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): MARST
+## dbl (2): Mean_wage, sex
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## 
 ## &gt; clean_wage &lt;- merge(x = wage_data_clean2, y = state_data, 
 ## +     by = &quot;STATEFIP&quot;)
 ## 
@@ -147,6 +158,11 @@ draft: false
 ## +     &quot;clean_wage.csv&quot;))
 ## 
 ## &gt; save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))
+## 
+## &gt; write_csv(average_wage_marst, file = here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_MARST.csv&quot;))
+## 
+## &gt; save(average_wage_marst, file = here::here(&quot;dataset/average_wage_MARST.RData.RData&quot;))
 ## 
 ## &gt; save(state_data, average_wage_educ, file = here::here(&quot;dataset/average_wage_educ.RData&quot;))</code></pre>
 <div id="our-data" class="section level2">

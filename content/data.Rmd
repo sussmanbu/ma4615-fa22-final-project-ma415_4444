@@ -3,7 +3,7 @@ title: Data
 description:
 toc: true
 featuredVideo:
-featuredImage: images/data-import-cheatsheet-thumbs.png
+featuredImage: https://d1y8sb8igg2f8e.cloudfront.net/images/MovingOnUp_copy3_PKViMja.width-800.jpg 
 draft: false
 ---
 
