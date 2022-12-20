@@ -5,7 +5,7 @@ toc: yes
 output:
 html_document:
 df_print: paged
-featuredImage: https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg
+featuredImage: https://images.seattletimes.com/wp-content/uploads/2022/01/continuing-education-getty.jpg?d=1560x932 
 draft: false
 featuredVideo: null
 ---
