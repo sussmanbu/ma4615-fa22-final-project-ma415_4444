@@ -53,6 +53,10 @@ wage_data_clean2 <- wage_data_clean2 %>%
 ##average wage group by EDUC
 average_wage_educ <- read_csv(here::here("dataset", "average_wage_educ.csv"))
 
+##average wage group by Marriage
+average_wage_marst <- read_csv(here::here("dataset", "average_wage_MARST.csv"))
+
+
 ##Combine two data frames
 clean_wage <- merge(x = wage_data_clean2, y = state_data, by = "STATEFIP")
 
@@ -103,5 +107,8 @@ save(average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))
 
 write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
 save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))
+
+write_csv(average_wage_marst, file = here::here("dataset", "average_wage_MARST.csv"))
+save(average_wage_marst, file = here::here("dataset/average_wage_MARST.RData.RData"))
 
 save(state_data, average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))

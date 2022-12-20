@@ -75,6 +75,17 @@ draft: false
 ## &gt; wage_data_clean2 &lt;- wage_data_clean2 %&gt;% dplyr::select(-c(OWNERSHPD)) %&gt;% 
 ## +     dplyr::select(-c(WKSWORK1)) %&gt;% dplyr::select(-c(EDUCD))
 ## 
+## &gt; average_wage_educ &lt;- read_csv(here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_educ.csv&quot;))</code></pre>
+<pre><code>## Rows: 22 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (3): EDUC, mean_wage, sex
+## lgl (2): ...4, ...5
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## 
 ## &gt; clean_wage &lt;- merge(x = wage_data_clean2, y = state_data, 
 ## +     by = &quot;STATEFIP&quot;)
 ## 
@@ -108,6 +119,10 @@ draft: false
 ## &gt; is.factor(clean_wage$STATE.f)
 ## [1] TRUE
 ## 
+## &gt; male_data &lt;- clean_wage %&gt;% filter(SEX == 1)
+## 
+## &gt; female_data &lt;- clean_wage %&gt;% filter(SEX == 2)
+## 
 ## &gt; write_csv(wage_data_clean2, file = here::here(&quot;dataset&quot;, 
 ## +     &quot;wage_data_clean2.csv&quot;))
 ## 
@@ -118,10 +133,22 @@ draft: false
 ## 
 ## &gt; save(state_data, file = here::here(&quot;dataset/state_data.RData&quot;))
 ## 
+## &gt; write_csv(state_data, file = here::here(&quot;dataset&quot;, 
+## +     &quot;state_data.csv&quot;))
+## 
+## &gt; save(state_data, file = here::here(&quot;dataset/state_data.RData&quot;))
+## 
+## &gt; write_csv(average_wage_educ, file = here::here(&quot;dataset&quot;, 
+## +     &quot;average_wage_educ.csv&quot;))
+## 
+## &gt; save(average_wage_educ, file = here::here(&quot;dataset/average_wage_educ.RData&quot;))
+## 
 ## &gt; write_csv(clean_wage, file = here::here(&quot;dataset-ignore&quot;, 
 ## +     &quot;clean_wage.csv&quot;))
 ## 
-## &gt; save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))</code></pre>
+## &gt; save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))
+## 
+## &gt; save(state_data, average_wage_educ, file = here::here(&quot;dataset/average_wage_educ.RData&quot;))</code></pre>
 <div id="our-data" class="section level2">
 <h2>Our data</h2>
 <div id="data1" class="section level3">
@@ -144,33 +171,78 @@ ERS (Economic Research Service US Department of Agriculture) compiles the latest
 <div id="independent-variables" class="section level3">
 <h3>Independent Variables</h3>
 <ol style="list-style-type: decimal">
-<li>EDUC: indicates respondents’ educational attainment, as measured by the highest year of school or degree completed.</li>
-<li>SEX (Sex): reports whether the person was male or female.<br />
-</li>
-<li>OWNERSHP (Ownership of dwelling (tenure) : indicates whether the housing unit was rented or owned by its inhabitants.</li>
-<li>SHOWER (Bathtub or shower): indicates whether the housing unit provided access to a permanently-installed bath and/or shower.</li>
-<li>FAMSIZE (Number of own family members in household): counts the number of own family members residing with each individual, including the person her/himself.</li>
-<li>AGE (Age): reports the person’s age in years as of the last birthday.</li>
-<li>MARST (Marital status): gives each person’s current marital status.</li>
-<li>SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.</li>
-<li>INCWAGE (Wage and salary income):reports each respondent’s total pre-tax wage and salary income - that is, money received as an employee - for the previous year.<br />
-</li>
-<li>STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.</li>
-<li>POVERTY: percentage of population in poverty in each state, 2020</li>
-<li>MHI (Median Household Income): median household income in each state, 2020</li>
-<li>CCR (College Completion Rate after 25): reports completing collage, adults 25 and older, 2020</li>
+<li><p>EDUC: indicates respondents’ educational attainment, as measured by the highest year of school or degree completed.</p>
+<p>Code:</p>
+<p>00: N/A or no schooling</p>
+<p>01: Nursery school to grade 4</p>
+<p>02: Grade5,6,7,or8</p>
+<p>03: Grade 9</p>
+<p>04: Grade 10</p>
+<p>05: Grade 11</p>
+<p>06: Grade 12</p>
+<p>07: 1 year of college</p>
+<p>08: 2 years of college</p>
+<p>09: 3 years of college</p>
+<p>10: 4 years of college</p>
+<p>11: 5+ years of college</p></li>
+<li><p>SEX (Sex): reports whether the person was male or female.</p>
+<p>Code:</p>
+<p>00: male</p>
+<p>01: female</p></li>
+<li><p>OWNERSHP (Ownership of dwelling (tenure) : indicates whether the housing unit was rented or owned by its inhabitants.</p>
+<p>Code:</p>
+<p>00: N/A</p>
+<p>01: Owned or being bought (loan)</p>
+<p>02: Rent</p></li>
+<li><p>SHOWER (Bathtub or shower): indicates whether the housing unit provided access to a permanently-installed bath and/or shower.</p></li>
+<li><p>FAMSIZE (Number of own family members in household): counts the number of own family members residing with each individual, including the person her/himself.</p></li>
+<li><p>AGE (Age): reports the person’s age in years as of the last birthday.</p></li>
+<li><p>MARST (Marital status): gives each person’s current marital status.</p></li>
+<li><p>SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.</p></li>
+<li><p>INCWAGE (Wage and salary income):reports each respondent’s total pre-tax wage and salary income - that is, money received as an employee - for the previous year.</p></li>
+<li><p>STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.</p></li>
+<li><p>POVERTY: percentage of population in poverty in each state, 2020</p></li>
+<li><p>MHI (Median Household Income): median household income in each state, 2020</p></li>
+<li><p>CCR (College Completion Rate after 25): reports completing collage, adults 25 and older, 2020</p></li>
 </ol>
 </div>
 </div>
 <div id="clean-data" class="section level2">
 <h2>Clean data</h2>
-<div id="data1-1" class="section level3">
-<h3>Data1</h3>
+<div id="load-data" class="section level3">
+<h3>Load data</h3>
 <pre class="r"><code>wage_data &lt;- read_csv(here::here(&quot;dataset-ignore&quot;, &quot;wage.csv&quot;)) </code></pre>
 <pre><code>## Rows: 2641054 Columns: 13
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (13): STATEFIP, OWNERSHP, OWNERSHPD, SHOWER, FAMSIZE, SEX, AGE, MARST, S...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>average_wage_educ &lt;- read_csv(here::here(&quot;dataset&quot;, &quot;average_wage_educ.csv&quot;))</code></pre>
+<pre><code>## Rows: 22 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (3): EDUC, mean_wage, sex
+## lgl (2): ...4, ...5
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>average_wage_marst &lt;- read_csv(here::here(&quot;dataset&quot;, &quot;average_wage_MARST.csv&quot;))</code></pre>
+<pre><code>## Rows: 4 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): MARST
+## dbl (2): Mean_wage, sex
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>state_data &lt;- read_csv(here::here(&quot;dataset&quot;, &quot;states.csv&quot;))</code></pre>
+<pre><code>## Rows: 51 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): STATE
+## dbl (4): STATEFIP, MHI, CCR, POVERTY
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -221,32 +293,11 @@ write_csv(state_data, file = here::here(&quot;dataset&quot;, &quot;state_data.cs
 save(state_data, file = here::here(&quot;dataset/state_data.RData&quot;))
 
 write_csv(clean_wage, file = here::here(&quot;dataset-ignore&quot;, &quot;clean_wage.csv&quot;))
-save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))</code></pre>
-<hr />
-</div>
-<div id="rubric-on-this-page" class="section level2">
-<h2>Rubric: On this page</h2>
-<p>you will</p>
-<ul>
-<li>Describe where/how to find data.
-<ul>
-<li>You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.</li>
-<li>Why was the data collected/curated? Who put it together? (This is important, if you don’t know why it was collected then that might not be a good dataset to look at.</li>
-</ul></li>
-<li>Describe the different data files used and what each variable means.
-<ul>
-<li>If you have many variables then only describe the most relevant ones and summarize the rest.</li>
-</ul></li>
-<li>Describe any cleaning you had to do for your data.
-<ul>
-<li>You <em>must</em> include a link to your <code>load_and_clean_data.R</code> file.</li>
-<li>Also, describe any additional R packages you used outside of those covered in class.</li>
-<li>Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.</li>
-<li>Some repetition of what you do in your <code>load_and_clean_data.R</code> file is fine and encouraged if it helps explain what you did.</li>
-</ul></li>
-<li>Organization, clarity, cleanliness of the page
-<ul>
-<li>Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.</li>
-</ul></li>
-</ul>
+save(clean_wage, file = here::here(&quot;dataset-ignore/clean_wage.RData&quot;))
+
+write_csv(average_wage_educ, file=here::here(&quot;dataset&quot;,&quot;average_wage_educ.csv&quot;))
+save(average_wage_educ, file = here::here(&quot;dataset/average_wage_educ.RData&quot;))
+
+write_csv(average_wage_marst, file = here::here(&quot;dataset&quot;, &quot;average_wage_MARST.csv&quot;))
+save(average_wage_marst, file = here::here(&quot;dataset/average_wage_MARST.RData.RData&quot;))</code></pre>
 </div>

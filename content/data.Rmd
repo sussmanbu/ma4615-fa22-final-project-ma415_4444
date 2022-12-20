@@ -29,28 +29,85 @@ ERS (Economic Research Service US Department of Agriculture) compiles the latest
 ## Our variables
 
 ### Dependent Variable
-INCWAGE (Wage and salary income): reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year.	
+INCWAGE (Wage and salary income): reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year. 
 
 ### Independent Variables
 1. EDUC: indicates respondents' educational attainment, as measured by the highest year of school or degree completed.
-2. SEX (Sex): reports whether the person was male or female.	
+
+    Code:
+    
+    00: N/A or no schooling
+    
+    01: Nursery school to grade 4
+    
+    02: Grade5,6,7,or8
+    
+    03: Grade 9
+    
+    04: Grade 10
+    
+    05: Grade 11
+    
+    06: Grade 12
+    
+    07: 1 year of college
+    
+    08: 2 years of college
+    
+    09: 3 years of college
+    
+    10: 4 years of college
+    
+    11: 5+ years of college
+
+
+2. SEX (Sex): reports whether the person was male or female. 
+
+    Code:
+    
+    00: male
+    
+    01: female
+  
 3. OWNERSHP (Ownership of dwelling (tenure) : indicates whether the housing unit was rented or owned by its inhabitants.
+
+    Code:
+    
+    00: N/A
+    
+    01: Owned or being bought (loan)
+    
+    02: Rent
+  
 4. SHOWER (Bathtub or shower): indicates whether the housing unit provided access to a permanently-installed bath and/or shower. 
-5. FAMSIZE (Number of own family members in household): counts the number of own family members residing with each individual, including the person her/himself. 
+
+
+5. FAMSIZE (Number of own family members in household): counts the number of own family members residing with each individual, including the person her/himself.
+
 6. AGE (Age): reports the person's age in years as of the last birthday.
+
 7. MARST (Marital status): gives each person's current marital status.
-8. SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.	
-9. INCWAGE (Wage and salary income):reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year.	
+
+8. SPEAKENG (Speaks English)： indicates whether the respondent speaks only English at home, and also reports how well the respondent, who speaks a language other than English at home, speaks English.
+
+9. INCWAGE (Wage and salary income):reports each respondent's total pre-tax wage and salary income - that is, money received as an employee - for the previous year. 
+
 10. STATEFIP (State (FIPS code)): reports the state in which the household was located, using the Federal Information Processing Standards (FIPS) coding scheme, which orders the states alphabetically.
+
 11. POVERTY: percentage of population in poverty in each state, 2020
+
 12. MHI (Median Household Income): median household income in each state, 2020
+
 13. CCR (College Completion Rate after 25): reports completing collage, adults 25 and older, 2020
 
 ## Clean data
 
-### Data1
+### Load data
 ```{r Data1}
 wage_data <- read_csv(here::here("dataset-ignore", "wage.csv")) 
+average_wage_educ <- read_csv(here::here("dataset", "average_wage_educ.csv"))
+average_wage_marst <- read_csv(here::here("dataset", "average_wage_MARST.csv"))
+state_data <- read_csv(here::here("dataset", "states.csv"))
 ```
 
 #### INCWAGE
@@ -106,26 +163,9 @@ save(state_data, file = here::here("dataset/state_data.RData"))
 write_csv(clean_wage, file = here::here("dataset-ignore", "clean_wage.csv"))
 save(clean_wage, file = here::here("dataset-ignore/clean_wage.RData"))
 
+write_csv(average_wage_educ, file=here::here("dataset","average_wage_educ.csv"))
+save(average_wage_educ, file = here::here("dataset/average_wage_educ.RData"))
+
+write_csv(average_wage_marst, file = here::here("dataset", "average_wage_MARST.csv"))
+save(average_wage_marst, file = here::here("dataset/average_wage_MARST.RData.RData"))
 ```
-
-
-
-
-----
-
-## Rubric: On this page
-
-you will
-
-* Describe where/how to find data.
-  * You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.
-  * Why was the data collected/curated? Who put it together? (This is important, if you don't know why it was collected then that might not be a good dataset to look at.
-* Describe the different data files used and what each variable means. 
-  * If you have many variables then only describe the most relevant ones and summarize the rest.
-* Describe any cleaning you had to do for your data.
-  * You *must* include a link to your `load_and_clean_data.R` file.
-  * Also, describe any additional R packages you used outside of those covered in class.
-  * Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.
-  * Some repetition of what you do in your `load_and_clean_data.R` file is fine and encouraged if it helps explain what you did.
-* Organization, clarity, cleanliness of the page
-  * Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.

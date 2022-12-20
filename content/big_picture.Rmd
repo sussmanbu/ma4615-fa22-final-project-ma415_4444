@@ -9,7 +9,6 @@ draft: false
 
 This comes from the file `content/big_picture.Rmd`.
 
-Think of this page as your 538/Upshot style article. This means that you should try to tell a story through the data and your analysis. Read articles from those sites and similar sites to get a feeling for what they are like. Importantly, these should be geared towards the general public. You shouldn't assume the reader understands how to interpret a linear regression. Focus on interpretation and visualizations.
 
 ```{r, echo=FALSE}
 library(tidyverse)
@@ -22,9 +21,13 @@ print(ls())
 
 ## Why do we have to receive education? 
 
-On October 11, the Royal Swedish Academy of Sciences announced the three winners of the 2021 Nobel Prize in Economics. Perhaps we all once thought that the Nobel Prize was far away from our life, but this year's Nobel laureates in the field of labor economics used empirical methods in their research to prove many major theories. For example, the more you study, the more money you make.
+As a college student, although there are many interesting classes to go to every day, such as MA415, sometimes we stand in front of the classroom at 8 am and wonder: what am I doing here?  
+I'm sure most parents have told their children, "You have to study hard, learn more, and grow more, so that when you grow up you can find a good job and earn a lot of money."
 
-I'm sure most parents have said to their children, "You have to study hard, learn more, and grow more, so that when you grow up you can find a good job and earn a lot of money."
+Therefore, our group is interested in finding out the relationship between education and income at the very beginning. But with the depth of research, we find out there are many more variables that need to be dug, such as gender, marital, and language influence.
+
+The following data analysis is based on one year of statistics in 2020 in the US.
+
 
 ### Q: Is that really the case? Specifically, could higher degrees of education help us to get a better job and earn more money?
 
@@ -34,9 +37,9 @@ library(tidyr)
 clean_wage %>% ggplot(aes(x = CCR, y = MHI)) + geom_smooth(stat = 'smooth', color = 'Red', method = 'gam', formula = y ~ s(x, bs = "cs"))+ labs(title="College Completion Rate after 25 vs. Median Household Income", x="College Completion Rate after 25", y=" Median Household Income")
 ```
 
-Above is the graph that illustrates the relationship between states' college completion rate and states' median household income. For example, CCR = 0.4 means this state has a 40% college graduation rate for people after age 25. To be generalized, this graph can show the relationship between the income and education level: the CCR increases, MHI increases. 
-
-It seems like higher education can have higher wage according to this graph predicts. It is true that college is a barrier to entry for many companies, and having a degree is definitely better than not having one. But the employment activities to be carried out by the university are often services that require a little networking, and it is rare to hear of a college student going into a factory as an assembly line worker, which is certainly not a common phenomenon. in a scenario where the structure of the market is gradually becoming problematic or distorted. Human relations in the service industry can be tasteless as well. There are simple multiple-choice games, or information transparency has devolved into a kind of opaque black box operation. or appears to be fair but, in reality, is not. In such circumstances, a service industry involving the human body may become extremely difficult to enter, which is one of the reasons for the current phenomenon of increasingly high financial thresholds in large cities. For example, the household registration system and so on are obviously contrary to the development of the modern service industry, but why will it become increasingly strong? I am afraid that the logic in the middle of this needs to be carefully sorted out. That is, under the current conditions, the university is probably able to ensure a subsistence level. But there does not seem to be a causal relationship with high incomes. Therefore, we might need further research to see whether there are any other variables that can influence the wage.
+Above is the graph that illustrates the relationship between states’ college completion rate and states’ median household income. For example, College Completion Rate = 0.4 means 40% of the students after age 25 can graduate from college in this state. Generally, we can see that when the College Completion Rate increases, the household income increases. It seems like a high degree is related to a high wage. 
+ 
+It is true that college is a barrier to entry for many companies, and having a degree is definitely better than not having one. But the employment activities to be carried out by the university are often services that require a little networking, and it is rare to hear of a college student going into a factory as an assembly line worker, which is certainly not a common phenomenon. in a scenario where the structure of the market is gradually becoming problematic or distorted. Human relations in the service industry can be tasteless as well. There are simple multiple-choice games, or information transparency has devolved into a kind of opaque black box operation. or appears to be fair but, in reality, is not. In such circumstances, a service industry involving the human body may become extremely difficult to enter, which is one of the reasons for the current phenomenon of increasingly high financial thresholds in large cities. For example, the household registration system and so on are obviously contrary to the development of the modern service industry, but why will it become increasingly strong? I am afraid that the logic in the middle of this needs to be carefully sorted out. That is, under the current conditions, the university is probably able to ensure a subsistence level. But there does not seem to be a causal relationship with high incomes. Therefore, we might need further research to see whether there are any other variables that can influence the wage.
 
 
 ### Q: Does gender have an influence on the wage although the education level is the same?
@@ -46,13 +49,12 @@ library(ggplot2)
 library(tidyr)
 load(here::here("dataset/average_wage_educ.RData"))
 average_wage_educ %>%  
-  ggplot(aes(x = as.factor(EDUC), y = mean_wage, fill=as.factor(sex))) + geom_bar(stat = "identity",position = position_dodge()) + labs(title="Education vs. Mean Wage", x="Education", y=" Mean Wage")
+  ggplot(aes(x = as.factor(EDUC), y = mean_wage, fill=as.factor(sex))) + geom_bar(stat = "identity",position = position_dodge())+ scale_x_discrete (name = 'education',labels=c('NO Schooling','to Grade4','Grade5678','Grade9','Grade10','Grade11','Grade12','1  year of college','2 year of college', '4 year of college','5+ year of college')) +  scale_fill_discrete(name ='Gender', labels  = c("Male", 'Female')) + theme (axis.text.x = element_text(angle = 20, vjust = 0.5, hjust=1))
+                                                                                                      
+
 ```
 
-The above is a bar chart to show the relationship between the education level and the mean wage of each state by the factor of male and female.  For our x-axis is the education level, the lower the number of x-axis, the lower the education level. For the factor in gender, we set “1” as male, and “2” as female. 
-
-Sadly, women make less money than men with the same years of education in general. The maximum medium wage gap of male and female is almost 10000 dollor in the education level of “8” which means after both finishing the 2 years of college, male can get higher wage than female. Of course some may question how even in one educational context, which may have been completed at different schools, this may lead to wage differences at the same level of education. This is a very good question, but there is a lack of data collection on the market on this issue, and we would be happy to collect data in a future study if necessary. 
-But for now, in a broad analysis, we retain that gender differences have an impact on wages.
+This bar chart shows the relationship between the education level and the mean wage of each state in terms of gender. Sadly, women make less money than men with the same years of education in general. The maximum medium wage gap of male and female is almost $10,000. But surprisingly, female wages gradually catch up with male wages during college years. According to a study, women outperform men in academic performance in college. So what mainly lead to this gap is the conscious and unconscious discrimination in hiring and pay decisions.
 
 
 ### Q: Despite being educated, how much AGE can influence wages. 
@@ -60,12 +62,11 @@ But for now, in a broad analysis, we retain that gender differences have an impa
 ```{r q3, echo=FALSE}
 library(ggplot2)
 library(tidyr)
-clean_wage %>% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth(stat = 'smooth', method = 'gam', formula = y ~ s(x, bs = "cs")) + labs(title="Age vs. Wage", x="Age", y="Wage")
+clean_wage %>% ggplot(aes(x = AGE, y = INCWAGE, color = as.factor(SEX))) + geom_smooth(stat = 'smooth', method = 'gam', formula = y ~ s(x, bs = "cs")) + labs(title="Age vs. Wage", x="Age", y="Wage") + scale_colour_discrete(name = 'Gender', labels  = c('Male', 'Female'))
 ```
 
-The above graph demonstrates the wage distribution in terms of age with different genders. We can see that for both genders, the wage increases until the age of 35 and remains the same. It starts to decrease at age 50 and slows down the rate of decrease at about age 70. Therefore, we can call age 18 - 35 the golden time of making money, then 35 - 50 is the time to settle down and save the money for retirement. Additionally, we can still see a huge gap between genders acrossing all ages, where the gap is astonishingly large at age 35 - 50. 
+The above graph demonstrates the wage distribution in terms of age with different genders. We can see that for both genders, the wage keeps increasing until the age of 35 then starts to decrease at age 50. Therefore, we can call age 14 - 30 the golden time of making money, then 30 - 50 is the time to settle down and save the money for retirement. Additionally, we can still see a huge gap between genders acrossing all ages, where the gap is astonishingly large at age 35 - 50 with about $8000 difference.
 
-With the increase of education rate, young generations’ idea of marriage has changed dramatically these years. In the USA, does marriage influence wage and vice versa? 
 
 ### Q: What about marriage?
 
@@ -74,16 +75,14 @@ library(ggplot2)
 library(tidyr)
 load(here::here("dataset/average_wage_MARST.RData.RData"))
 average_wage_marst %>%  
-  ggplot(aes(x = as.factor(MARST), y = Mean_wage, fill=as.factor(sex))) + geom_bar(stat = "identity",position = position_dodge()) + labs(title="Marital Status vs. Mean Wage", x="Marital Status", y=" Mean Wage")
+  ggplot(aes(x = as.factor(MARST), y = Mean_wage, fill=as.factor(sex))) + geom_bar(stat = "identity",position = position_dodge()) + labs(title="Marital Status vs. Mean Wage", x="Marital Status", y=" Mean Wage") + scale_fill_discrete(name = 'Gender', labels  = c('Male', 'Female'))
 ```
 
-The impact of marriage on the employment and wages of the female labor force has been a topic of interest in the academic community. Below is the bar chart showing the relationship between the marital status and their mean wage. 
+With the increase of education rate, young generations’ idea of marriage has changed dramatically these years. In the USA, does marriage influence wage and vice versa? 
 
-First, it can be found that married people can make more money than singles. In summary, both the absolute amount of female wages and the level of gender wage gap reflect the effect of marriage on their enhancement and improvement. Both the absolute amount of women's wages and the level of the gender wage gap reflect the raising and improving effect of marriage on them, i.e., the same "marriage lift" in women's wages. It seems logical that there is also a "marital uptick" in women's wages.
+The impact of marriage on the employment and wages of the female labor force has been a topic of interest in the academic community. Above is a bar chart showing the relationship between the marital status and the mean wage. 
 
-Second, we can simply get from the graph that men earn higher average wages than women, regardless of whether they are married or not. Also, marriage has increased the wage gap between women and men, i.e. marriage is not a "blessing" but a "curse".
-
-Our group inferred an explanation for the "marriage curse": first, the transition from single to married might decreases the probability that a woman will be trained , thus reducing the likelihood that she will earn a high wage after marriage. Second, it is marriage that reduces female labor force participation.
+First, it can be found that married people can make more money than singles. Second, we can simply get from the graph that men make more money than women, regardless of getting married or not. Astonishingly, marriage has increased the wage gap between women and men, whether it is because of the stereotype of “housewife”, or because of spending time on their children. Either way, it is a perfect illustration of “marriage is not a ‘blessing’ but a ‘curse’”.
 
 
 ## Conlusion and Discussion
@@ -91,61 +90,9 @@ According to our analysis, our parents are correct. Years of education can indee
 
 Here is our interactive page, which will provide you with a more concrete understanding of our analysis.
 
-#Interactive
-In order to understand this analysis and explore the income, educational level and poverty rate interaction, you can view our own explorer: https://xchen23.shinyapps.io/example/
+## Interactive
+In order to understand this analysis and explore the income, educational level and poverty rate interaction, you can view our own explorer [here](https://xchen23.shinyapps.io/example/).
 This interactive feature allows you to select a certain state in the U.S. map, and by double clicking the area you want to learn, the information about a state's median income, college completion rate and poverty rate will be popped up. It will be a great tool for us to learn about the general behavior of a certain state. 
 
----
-
-## Rubric: On this page
-
-You will
-
-
-
-* Title
-  * Your big picture page should have a creative/click-baity title/headline that provides a hint about your thesis.
-* Clarity of Explanation
-  * You should have a clear thesis/goal for this page. What are you trying to show? Make sure that you explain your analysis in detail but don't go into top much mathematics or statistics. The audience for this page is the general public (to the extent possible).
-* Quality of Figures
-  * Each figure should be very polished and also not too complicated. There should be a clear interpretation of the figure so the figure has a clear purpose. Even something like a histogram can be difficult to interpret for non-experts.
-* Creativity
-  * Do your best to make things interesting. Think of a story. Think of how each part of your analysis supports the previous part or provides a different perspective.
-  
-**Note**: This page should have no code visible, i.e. use `echo=FALSE`.  
-
----
-
-## Rubric: Other components
-
-### Interactive
-
-You will also be required to make an interactive dashboard like [this one](/flex/flex.html).
-
-Your Big Data page should include a link to an interactive dashboard. The dashboard should be created either using Shiny or FlexDashboard (or another tool with professor's approval). This interactive component should in some way support your thesis from your big picture page. Good interactives often provide both high-level understanding of the data while allowing a user to investigate specific scenarios, observations, subgroups, etc.
-
-* Quality and ease of use of the interactive components.
-Is it clear what can be explored using your interactive components?
-Does it enhance and reinforce your conclusions from the Big Picture?
-Plotly with default hover text will get no credit. Be creative!
-
-
-### Video Recording
-
-Make a video recording (probably using Zoom) demonstrating your interactive components.
-You should provide a quick explanation of your data and demonstrate some of the conclusions from your EDA.
-This video should be no longer than 4 minutes.
-Include a link to your video (and password if needed) in your README.md file on your Github repository. You are not required to provide a link on the website.
-This can be presented by any subset of the team members.
-
-
-### Rest of the Site
-
-Finally, here are important things to keep in mind for the rest of the site. 
-
-The main title of your page is informative.
-Each post has an author/description/informative title.
-All lab required posts are present.
-Each page (including the home page) has a nice featured image associated with it.
-Your about page is up to date and clean.
-You have removed the generic posts from the initial site template.
+## video
+We have included our video in our README.md file.

@@ -38,8 +38,8 @@ The questions are trying to answer are:
 ## correlation matrix
 We ran a Correlation Matrix to see if there are any highly correlated variables. OWNERSHIP ~ SHOWER caught our eyes so we decided to drop SHOWER because the correlation rate of “shower” and other variables are quite high. 
 
-```{r correlation matrix, echo=false}
-install.packages("GGally")
+```{r correlation matrix, echo=FALSE}
+install.packages("GGally",repos = "http://cran.us.r-project.org")
 library(GGally)
 wage_data_clean2 %>%
 ggcorr(method = c("everything", "pearson")) 
@@ -52,9 +52,9 @@ We aim to build a model that can be used to predict wage. The independent variab
 ### Raw Model
 We run the model1 with all variables above included.
 
-```{r wage model1, echo=false}
+```{r wage model1, echo=FALSE}
 library(tidyverse)
-lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + AGE, data = clean_wage)
+lm_mod1 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + STATE.f + FAMSIZE + AGE + OWNERSHP, data = clean_wage)
 
 broom::tidy(lm_mod1) %>%
   dplyr::select(term, estimate, p.value) %>% 
@@ -65,22 +65,22 @@ broom::tidy(lm_mod1) %>%
 By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again. 
 
 #### BACKWARD STEPWISE REGRESSION
-We ran a BACKWARD STEPWISE REGRESSION and figured that all the variables are significant in our model.
+We ran a BACKWARD STEPWISE REGRESSION.
 
-```{r backward stepwise regression, echo=false}
+```{r backward stepwise regression, echo=FALSE}
 library(MASS)
 backward <- step(lm_mod1, direction = "backward", scope = formula(lm_mod1), trace = 0)
 backward$anova
 backward$coefficients
 summary(backward)
 ```
-
+The backward stepwise regression shows that all the variables are significant. 
 
 ### Final Model
 
-```{r wage model2, echo=false}
+```{r wage model2, echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
-lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + AGE, data = clean_wage)
+lm_mod2 <-lm(INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + FAMSIZE + AGE+ OWNERSHP, data = clean_wage)
 
 broom::tidy(lm_mod2) %>%
    dplyr::select(term, estimate, p.value) %>% 
@@ -88,12 +88,27 @@ broom::tidy(lm_mod2) %>%
   DT::datatable()
 ```
 
-Our final model enables us to use variables including years of education, marital status, ability to speak English, family size and age to predict one’s wage. 
+Our final model enables us to use variables including years of education, marital status, ability to speak English, family size and age to predict one’s wage. Since all the data is from the United States, the model is only used to predict wages in the United States. 
+
+
+For education, coefficients tell us how much/less wage one can get compared to not having school at all. For example, the coefficient for EDUC.f6 (grade12) is 3302.14393, which means compared with no schooling, graduating from high school can increase average wage by $3302.14 per year. We noticed that the coefficients are negative from EDUC.f2 (grade 4) to EDUC.f5 (grade11), which means for those who go to school but haven’t graduated from high school,  the average wages are less than not going to school at all. However, there’s a turning point at grade 12, from that point the average wage increases as years of education increases. We believe it’s because having a high school diploma is important. Receiving a high school diploma can help to increase wage, but education before that can help little. Moreover, those who choose to go to work directly may be able to gain more working experience compared to those who go to primary or secondary school for a few years. 
+
+We can also find that female’s average wage is $6492.90 per year less than male.
+
+In terms of marriage status, the average wage per year for married people is $9377.76 higher.
+
+Moreover, the average wage per year for people who can fluently speak English is $4303.86 higher compared to those who can't speak English. 
+
+We find a negative relationship between age and annual wage; as age increase by 1, wage decreases by  $329.32.
+
+For the ownership of dwelling (tenure), the model indicates that those who rent the dwell have higher average wage. 
+
+We find a positive correlation between family size and the wage wage: if the family size increases by one, the wage can increase by $147.08.
 
 
 ### Coefficient Breakdown
 #### wage ~ education
-```{r variable: EDUC graph model, echo=false}
+```{r variable: EDUC graph model, echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 lm_mod3 <-lm(INCWAGE ~ EDUC.f, data = clean_wage)
 
@@ -103,27 +118,29 @@ broom::tidy(lm_mod3) %>%
   DT::datatable()
 ```
 
-```{r variable: EDUC  graph, echo=false}
+```{r variable: EDUC  graph, echo=FALSE}
 #relationship between wage and education
 clean_wage %>%
-ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()+labs(title="Education vs. Wage", x="Education", y="Wage")
+ggplot(aes(x = as.factor(EDUC), y = INCWAGE)) + geom_boxplot()+labs(title="Education vs. Wage", x="Education", y="Wage")+ scale_x_discrete (name = 'education',labels=c('NO Schooling','to Grade4','Grade5678','Grade9','Grade10','Grade11','Grade12','1  year of college','2 year of college', '4 year of college','5+ year of college'))+ theme (axis.text.x = element_text(angle = 20, vjust = 0.5, hjust=1))
 ```
-We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since level 6, which is grade 12, one's wage increases as education level increase.
+We noticed that at first, as the year of education increases, the wage is lower compared with no schooling. However, since level 6, which is grade 12, one's wage increases as education level increases. We believe it’s because having a high school diploma is important. Receiving a high school diploma can help to increase wage, but education before that can help little. Moreover, those who choose to go to work directly may be able to gain more working experience compared to those who go to primary or secondary school for a few years. The graph also shows that there is a huge amount of outliers for the categories that have lower education levels. It is probably because individuals who haven’t received much education are quite different from each other. 
     
 ##### wage ~ education (by sex)
 
 
-```{r variable: EDUC + gender, echo=false}
+```{r variable: EDUC + gender, echo=FALSE}
 #relationship between wage and education colored by gender
 
 library(ggplot2)
 library(tidyr)
 clean_wage %>% 
-  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)+labs(title="Education vs. Wage by gender", x="Education", y="Wage")
+  ggplot(aes(x = as.factor(EDUC), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot(outlier.shape = NA)+labs(title="Education vs. Wage by gender", x="Education", y="Wage")+ scale_x_discrete (name = 'education',labels=c('NO Schooling','to Grade4','Grade5678','Grade9','Grade10','Grade11','Grade12','1  year of college','2 year of college', '4 year of college','5+ year of college'))+scale_color_discrete(name ='Gender', labels  = c("Male", 'Female')) + theme (axis.text.x = element_text(angle = 20, vjust = 0.5, hjust=1))
+                                                                                                
 ```
-From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
+From the graph above, we can find gender does play a role in influencing education's effect on wage: for most of the education levels, male's median wage is higher than female. However, we did notice that the gap between male and female started to decrease since grade 12. Female’s median wage even becomes higher than male for “5+ years in college”.  
 
-```{r variable: EDUC + gender + EDUC*gender, echo=false}
+##### wage ~ education*sex interaction anaylsis 
+```{r variable: EDUC + gender + EDUC*gender, echo=FALSE}
 edu_gd <- lm(INCWAGE ~ EDUC.f + SEX.f + EDUC.f*SEX.f, data = clean_wage)
 
 broom::tidy(edu_gd) %>%
@@ -133,126 +150,31 @@ broom::tidy(edu_gd) %>%
 
 ```
 
+We continue to analysis the the relationship between education, sex and wage by running a model containing education and sex interaction. The p-values of interaction terms are fairly small, which shows that the effects of education on wages are different between male and female. 
 
-```{r QQ, echo=false}
-par(mfrow = c(2, 2))
-plot(lm_mod3)
-```
-
-
-```{r female/male, echo=false}
-male_data <- clean_wage %>%
-  filter(SEX==1)
-
-female_data <- clean_wage %>%
-  filter(SEX==2)
-```
-
-```{r EDUC_male, echo=false}
-suppressPackageStartupMessages(library(tidyverse))
-lm_educ_male <-lm(INCWAGE ~ as.factor(EDUC), data = male_data)
-
-broom::tidy(lm_educ_male) %>%
-  dplyr::select(term, estimate, p.value) %>% 
-  mutate(across(where(is.numeric), ~round(.,))) %>% 
-  DT::datatable()
-```
-
-```{r EDUC_female, echo=false}
-suppressPackageStartupMessages(library(tidyverse))
-lm_educ_female <-lm(INCWAGE ~ as.factor(EDUC), data = female_data)
-
-broom::tidy(lm_educ_female) %>%
-   dplyr::select(term, estimate, p.value) %>% 
-  mutate(across(where(is.numeric), ~round(.,))) %>% 
-  DT::datatable()
-```
-
-From the graph and interaction analysis, we can find gender does play a role in influence education's effect on wage: no matter how much education one have received, male's average wage is always higher than female. 
 
 #### wage ~ age (by sex)
 
-```{r q1.2.2, echo=false }
+```{r q1.2.2, echo=FALSE }
 #relationship between wage and education colored by gender
-clean_wage %>%
-ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth() + labs(title="Age vs. Wage", x="Age", y="Wage")
+library(ggplot2)
+library(tidyr)
+clean_wage %>% ggplot(aes(x = AGE, y = INCWAGE, color=as.factor(SEX))) + geom_smooth(stat = 'smooth', method = 'gam', formula = y ~ s(x, bs = "cs")) + labs(title="Age vs. Wage", x="Age", y="Wage")+scale_colour_discrete(name = 'Gender', labels  = c('Male', 'Female'))
 ```
-Wage increases as age increase from 14 to 30, and then decreases. 
+Wage increases as age increase from 14 to 30, and then decreases. Average wage is approching to 0 after 80 years old. Moreover, male's wage is always higher than female. The gap between two gender is biggest from 25 years old to 50 years old: males average wage is about $8,000 higher than male per year. 
 
 #### wage ~ marital status  (by sex)
-```{r MARST graphT, echo=false}
+```{r MARST graphT, echo=FALSE}
 clean_wage %>%
-ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")
+ggplot(aes(x = as.factor(MARST), y = INCWAGE, color=as.factor(SEX))) + geom_boxplot() + labs(title="Marital Status vs. Wage", x="Marital Status", y="Wage")+ scale_color_discrete(name = 'Gender', labels  = c('Male', 'Female'))
 ```
 Generally speaking, married people are more likely to have higher wages. However, we can clearly find the gender differences in terms of marriage. The wage gap between male and female is much larger for those who are married compared to not married. Therefore, it’s reasonable to assume that being married is associated with higher earnings, but its effect on male is much more significant than on female. 
 
-## Conclusion 
-We provides a model that can help us to use years of education, marital status, ability to speak English, family size and age to predict one’s wage to predict one's wage. 
+## Conclusion and Limitation 
+Our project provides a model that can help us to use years of education, marital status, ability to speak English, family size, ownership of dwellings and age to predict one's wage. 
 
--------
+More specifically, we find that receiving a high school diploma is quite important. Our wages are significantly higher after we receive our high school diploma. Our wages then tends to increase as our education level increases. Moreover, there’s gender differences between males and females. Compared with females who have received the same levels of education, men’s wage is likely to be higher. In terms of age, one’s wage is likely to increase till around 35, and then decrease. Again, men are likely to earn higher wages than women who are as old as them. For marriage, married people are more likely to have higher wages. The gender gap between two sex is larger for married group compared with non-married group. Moreover, people who rent dwellings have higher average wages. We also observe a positive relationship between family size and wage, and we conclude that being able to speak English fluently is likely to have higher wages. 
 
-## Note on Attribution
+One thing that we want to highlight in our project is the importance of education. Trying to get a high school diploma, and even a college degree is significant to increase one’s wage. Moreover, there are gender differences. Females are more likely to be treated unfairly if they have less education and been married. We hope our project can raise people’s awareness about education and gender differences.
 
-If you are directly quoting from a source, please make that clear. You can show quotes using `>` like this
-
-```
-> To be or not to be.
-```
-
-> To be or not to be.
-
-Also, make sure to provide a link or citation to where you are quoting from.
-
--------
-
-
-## Rubric: On this page
-
-you will
-
-
-* Introduce what motivates your Data Analysis (DA)
-  * Which variables and relationships are you most interested in?
-```{r q1.1}
-#the relationship between wage and education.
-#what factors can influence one's wage and salary
-```
-  
-  * What questions are you interested in answering?
-```{r q1.2.1 variable: EDUC}
-#the relationship between wage and education
-
-```
-  
-* Breadth of the DA
-  * Make sure that you ask enough initial questions to explore the different variables in your data.
-  * i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?
-```{r q2}
-#we explore the relationship between wage and education, colored by gender
-
-
-```
-  
-* Depth of the DA
-  * When you answer one question, usually more questions arise as well. 
-  * The depth of the DA is about coming up with and exploring the answers to these questions, often iterating the process a few times.
-* Modeling and Inference 
-
-  * You should also include some kind of formal statistical model and/or inference. This could be a linear regression, logistic regression, hypothesis testing etc.
-  
-  * Explain the techniques you used for validating your results.
-  * Describe the results of your modelling and make sure to give a sense of the uncertainty in your estimates and conclusions.
-* Explain the flaws and limitations of your analysis
-  * Are there some assumptions that you needed to make that might not hold? Is there other data that would help to answer your questions? ...
-* Clarity Figures
-  * Are your figures/tables/results easy to read, informative, without problems like overplotting, hard-to-read labels, etc?
-  * Each figure should provide a key insight. Too many figures or other data summaries can detract from this.
-* Clarity of Explanations
-  * Do you introduce why you are doing each analysis?
-  * How well do you explain each figure/result?
-  * Do you provide interpretations that suggest further analysis or explanations for observed phenomenon?
-* Organization and cleanliness.
-  * Make sure to remove excessive warnings, use clean easy-to-read code, organize with sections or multiple pages, use bullets, etc.
-  
-  
-**NOTE**: Your Data Analysis can be broken up into multiple pages if that helps with your organization.
+For our flows and limitation, we thought that the relationship between wage and education would always be positive. But it is negative in the first few years of education. We tried to interpret the reason but we definitely could look deeper into that. Additionally, we only include data in 2020 to keep the data size small, but there is data of the past few decades. So if we have a better computer to run the code, we can look into and compare our models with different years, and our model could be more accurate with a larger data set.

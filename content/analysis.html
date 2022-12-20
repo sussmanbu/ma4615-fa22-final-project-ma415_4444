@@ -1,7 +1,7 @@
 ---
 title: "Analysis"
 description: null
-toc: true
+toc: yes
 output:
 html_document:
 df_print: paged
@@ -34,7 +34,7 @@ featuredVideo: null
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre><code>## [1] &quot;/Users/xingru/MA415/ma4615-fa22-final-project-ma415_4444/content&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/sarazheng/Desktop/MA415/ma4615-fa22-final-project-ma415_4444/content&quot;</code></pre>
 <pre><code>## [1] &quot;clean_wage&quot;       &quot;wage_data_clean2&quot;</code></pre>
 <p>As senior students, we often question ourselves about what we are doing right now. What those 22 years of education could bring us in the future? Money? Fame? We want to be rich but we don’t know if all those years of hard-work could lead to a rich life. Therefore, we want to explore the relationship between wage and education.</p>
 <p>We also noticed that sexism is a huge issue in society, especially when it comes to wage. So we are also interested in the factors that result in the wage difference in terms of gender.</p>
@@ -46,6 +46,9 @@ featuredVideo: null
 <div id="correlation-matrix" class="section level2">
 <h2>correlation matrix</h2>
 <p>We ran a Correlation Matrix to see if there are any highly correlated variables. OWNERSHIP ~ SHOWER caught our eyes so we decided to drop SHOWER because the correlation rate of “shower” and other variables are quite high.</p>
+<pre><code>## 
+## The downloaded binary packages are in
+##  /var/folders/0g/zjhstsqn54l4fzq1ftmzxygm0000gn/T//RtmpOH2k8P/downloaded_packages</code></pre>
 <pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
 ##   method from   
 ##   +.gg   ggplot2</code></pre>
@@ -60,173 +63,182 @@ featuredVideo: null
 <h3>Raw Model</h3>
 <p>We run the model1 with all variables above included.</p>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65"],["(Intercept)","EDUC.f1","EDUC.f2","EDUC.f3","EDUC.f4","EDUC.f5","EDUC.f6","EDUC.f7","EDUC.f8","EDUC.f10","EDUC.f11","SEX.f2","MARST.f1","SPEAKENG.f1","SPEAKENG.f2","STATE.fAlaska","STATE.fArkansas","STATE.fCalifornia","STATE.fColorado","STATE.fDelaware","STATE.fDistrict of Columbia","STATE.fFlorida","STATE.fGeorgia","STATE.fHawaii","STATE.fIdaho","STATE.fIllinois","STATE.fIndiana","STATE.fIowa","STATE.fKansas","STATE.fKentucky","STATE.fLouisiana","STATE.fMaine","STATE.fMaryland","STATE.fMassachusetts","STATE.fMichigan","STATE.fMinnesota","STATE.fMississippi","STATE.fMissouri","STATE.fMontana","STATE.fNebraska","STATE.fNevada","STATE.fNew Hampshire","STATE.fNew Jersey","STATE.fNew Mexico","STATE.fNew York","STATE.fNorth Carolina","STATE.fNorth Dakota","STATE.fOhio","STATE.fOklahoma","STATE.fOregon","STATE.fPennsylvania","STATE.fRhode Island","STATE.fSouth Carolina","STATE.fSouth Dakota","STATE.fTennessee","STATE.fTexas","STATE.fUtah","STATE.fVermont","STATE.fVirginia","STATE.fWashington","STATE.fWest Virginia","STATE.fWisconsin","STATE.fWyoming","FAMSIZE","AGE"],[22786.55712,876.54254,-944.81503,-7025.21289,-10474.72573,-10475.66001,3420.97197,5238.52909,12886.99636,17975.05487,21928.79873,-6268.94491,9195.82926,3201.60921,577.15562,5044.72497,268.11777,-655.71596,1565.73921,2828.9017,3593.88769,2436.57878,806.05528,2829.82805,-500.71891,3188.67616,2333.44615,2940.38984,1396.59305,582.70825,828.01369,184.43309,5036.82148,3935.33968,1069.39734,3960.13795,-1032.94166,1206.13958,-1016.55748,2854.85299,2271.84313,3441.32838,4271.13195,-690.25581,2566.59826,34.96505,2853.06619,2635.53095,90.18032,1219.68737,2571.93196,3383.54092,-467.2032,2420.28745,407.29941,1294.98987,779.50695,1163.43827,2638.64805,2831.64561,-123.07992,3117.95042,3985.03123,367.98242,-332.85982],[0,0.00611,0,0,0,0,0,0,0,0,0,0,0,0,0.01014,0,0.16524,0.00529,0,0,0,0,2e-05,0,0.07293,0,0,0,0,0.00493,0.00016,0.52295,0,0,0,0,3e-05,0,0.00134,0,0,0,0,0.01111,0,0.84611,0,0,0.66693,0,0,0,0.02576,0,0.03624,0,0.00066,0.00245,0,0,0.65992,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66"],["(Intercept)","EDUC.f1","EDUC.f2","EDUC.f3","EDUC.f4","EDUC.f5","EDUC.f6","EDUC.f7","EDUC.f8","EDUC.f10","EDUC.f11","SEX.f2","MARST.f1","SPEAKENG.f1","SPEAKENG.f2","STATE.fAlaska","STATE.fArkansas","STATE.fCalifornia","STATE.fColorado","STATE.fDelaware","STATE.fDistrict of Columbia","STATE.fFlorida","STATE.fGeorgia","STATE.fHawaii","STATE.fIdaho","STATE.fIllinois","STATE.fIndiana","STATE.fIowa","STATE.fKansas","STATE.fKentucky","STATE.fLouisiana","STATE.fMaine","STATE.fMaryland","STATE.fMassachusetts","STATE.fMichigan","STATE.fMinnesota","STATE.fMississippi","STATE.fMissouri","STATE.fMontana","STATE.fNebraska","STATE.fNevada","STATE.fNew Hampshire","STATE.fNew Jersey","STATE.fNew Mexico","STATE.fNew York","STATE.fNorth Carolina","STATE.fNorth Dakota","STATE.fOhio","STATE.fOklahoma","STATE.fOregon","STATE.fPennsylvania","STATE.fRhode Island","STATE.fSouth Carolina","STATE.fSouth Dakota","STATE.fTennessee","STATE.fTexas","STATE.fUtah","STATE.fVermont","STATE.fVirginia","STATE.fWashington","STATE.fWest Virginia","STATE.fWisconsin","STATE.fWyoming","FAMSIZE","AGE","OWNERSHP"],[17303.84767,749.39548,-990.23427,-7166.21623,-10538.19849,-10538.88192,3195.63364,5073.90847,12398.2912,17362.86543,21420.55193,-6494.33391,9400.20366,4339.97732,848.37706,5210.36755,156.05568,-704.41022,1150.34312,2717.87221,3709.96131,2515.29242,818.59752,2850.08097,-530.22618,3209.57359,2473.83692,3135.46853,1396.82773,603.50994,859.90492,386.86814,5078.55975,3965.31672,1232.14041,4235.86596,-919.55463,1226.57286,-1117.16655,2827.3546,1718.93239,3612.6664,4200.06841,-646.48274,2384.07275,22.31022,2820.04905,2613.10113,73.58327,974.57364,2701.52356,3551.86322,-332.19506,2405.9596,337.05821,1257.33987,854.93105,1435.6422,2677.9687,2626.297,-49.78408,3256.48758,3891.54167,146.80827,-329.21778,4516.198],[0,0.01856,0,0,0,0,0,0,0,0,0,0,0,0,0.00015,0,0.41727,0.00262,0,0,0,0,1e-05,0,0.0565,0,0,0,0,0.00345,8e-05,0.17839,0,0,0,0,0.00021,0,0.0004,0,0,0,0,0.01692,0,0.90102,0,0,0.72433,1e-05,0,0,0.11131,0,0.08176,0,0.00018,0.00017,0,0,0.85813,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>By looking at the p-value from model1, we decided to drop ‘state’ and run the regression model again.</p>
 <div id="backward-stepwise-regression" class="section level4">
 <h4>BACKWARD STEPWISE REGRESSION</h4>
-<p>We ran a BACKWARD STEPWISE REGRESSION and figured that all the variables are significant in our model.</p>
+<p>We ran a BACKWARD STEPWISE REGRESSION.</p>
 <pre><code>## 
 ## Attaching package: &#39;MASS&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     select</code></pre>
 <pre><code>##   Step Df Deviance Resid. Df   Resid. Dev      AIC
-## 1      NA       NA   1961613 1.326292e+15 39884678</code></pre>
+## 1      NA       NA   1961612 1.314875e+15 39867720</code></pre>
 <pre><code>##                 (Intercept)                     EDUC.f1 
-##                 22786.55712                   876.54254 
+##                 17303.84767                   749.39548 
 ##                     EDUC.f2                     EDUC.f3 
-##                  -944.81503                 -7025.21289 
+##                  -990.23427                 -7166.21623 
 ##                     EDUC.f4                     EDUC.f5 
-##                -10474.72573                -10475.66001 
+##                -10538.19849                -10538.88192 
 ##                     EDUC.f6                     EDUC.f7 
-##                  3420.97197                  5238.52909 
+##                  3195.63364                  5073.90847 
 ##                     EDUC.f8                    EDUC.f10 
-##                 12886.99636                 17975.05487 
+##                 12398.29120                 17362.86543 
 ##                    EDUC.f11                      SEX.f2 
-##                 21928.79873                 -6268.94491 
+##                 21420.55193                 -6494.33391 
 ##                    MARST.f1                 SPEAKENG.f1 
-##                  9195.82926                  3201.60921 
+##                  9400.20366                  4339.97732 
 ##                 SPEAKENG.f2               STATE.fAlaska 
-##                   577.15562                  5044.72497 
+##                   848.37706                  5210.36755 
 ##             STATE.fArkansas           STATE.fCalifornia 
-##                   268.11777                  -655.71596 
+##                   156.05568                  -704.41022 
 ##             STATE.fColorado             STATE.fDelaware 
-##                  1565.73921                  2828.90170 
+##                  1150.34312                  2717.87221 
 ## STATE.fDistrict of Columbia              STATE.fFlorida 
-##                  3593.88769                  2436.57878 
+##                  3709.96131                  2515.29242 
 ##              STATE.fGeorgia               STATE.fHawaii 
-##                   806.05528                  2829.82805 
+##                   818.59752                  2850.08097 
 ##                STATE.fIdaho             STATE.fIllinois 
-##                  -500.71891                  3188.67616 
+##                  -530.22618                  3209.57359 
 ##              STATE.fIndiana                 STATE.fIowa 
-##                  2333.44615                  2940.38984 
+##                  2473.83692                  3135.46853 
 ##               STATE.fKansas             STATE.fKentucky 
-##                  1396.59305                   582.70825 
+##                  1396.82773                   603.50994 
 ##            STATE.fLouisiana                STATE.fMaine 
-##                   828.01369                   184.43309 
+##                   859.90492                   386.86814 
 ##             STATE.fMaryland        STATE.fMassachusetts 
-##                  5036.82148                  3935.33968 
+##                  5078.55975                  3965.31672 
 ##             STATE.fMichigan            STATE.fMinnesota 
-##                  1069.39734                  3960.13795 
+##                  1232.14041                  4235.86596 
 ##          STATE.fMississippi             STATE.fMissouri 
-##                 -1032.94166                  1206.13958 
+##                  -919.55463                  1226.57286 
 ##              STATE.fMontana             STATE.fNebraska 
-##                 -1016.55748                  2854.85299 
+##                 -1117.16655                  2827.35460 
 ##               STATE.fNevada        STATE.fNew Hampshire 
-##                  2271.84313                  3441.32838 
+##                  1718.93239                  3612.66640 
 ##           STATE.fNew Jersey           STATE.fNew Mexico 
-##                  4271.13195                  -690.25581 
+##                  4200.06841                  -646.48274 
 ##             STATE.fNew York       STATE.fNorth Carolina 
-##                  2566.59826                    34.96505 
+##                  2384.07275                    22.31022 
 ##         STATE.fNorth Dakota                 STATE.fOhio 
-##                  2853.06619                  2635.53095 
+##                  2820.04905                  2613.10113 
 ##             STATE.fOklahoma               STATE.fOregon 
-##                    90.18032                  1219.68737 
+##                    73.58327                   974.57364 
 ##         STATE.fPennsylvania         STATE.fRhode Island 
-##                  2571.93196                  3383.54092 
+##                  2701.52356                  3551.86322 
 ##       STATE.fSouth Carolina         STATE.fSouth Dakota 
-##                  -467.20320                  2420.28745 
+##                  -332.19506                  2405.95960 
 ##            STATE.fTennessee                STATE.fTexas 
-##                   407.29941                  1294.98987 
+##                   337.05821                  1257.33987 
 ##                 STATE.fUtah              STATE.fVermont 
-##                   779.50695                  1163.43827 
+##                   854.93105                  1435.64220 
 ##             STATE.fVirginia           STATE.fWashington 
-##                  2638.64805                  2831.64561 
+##                  2677.96870                  2626.29700 
 ##        STATE.fWest Virginia            STATE.fWisconsin 
-##                  -123.07992                  3117.95042 
+##                   -49.78408                  3256.48758 
 ##              STATE.fWyoming                     FAMSIZE 
-##                  3985.03123                   367.98242 
-##                         AGE 
-##                  -332.85982</code></pre>
+##                  3891.54167                   146.80827 
+##                         AGE                    OWNERSHP 
+##                  -329.21778                  4516.19800</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = INCWAGE ~ EDUC.f + SEX.f + MARST.f + SPEAKENG.f + 
-##     STATE.f + FAMSIZE + AGE, data = clean_wage)
+##     STATE.f + FAMSIZE + AGE + OWNERSHP, data = clean_wage)
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -55533 -18465  -6794  13744 121368 
+## -57379 -18059  -6749  13333 119024 
 ## 
 ## Coefficients:
 ##                               Estimate Std. Error  t value Pr(&gt;|t|)    
-## (Intercept)                  22786.557    283.060   80.501  &lt; 2e-16 ***
-## EDUC.f1                        876.543    319.682    2.742 0.006108 ** 
-## EDUC.f2                       -944.815    192.881   -4.898 9.66e-07 ***
-## EDUC.f3                      -7025.213    210.152  -33.429  &lt; 2e-16 ***
-## EDUC.f4                     -10474.726    188.282  -55.633  &lt; 2e-16 ***
-## EDUC.f5                     -10475.660    181.862  -57.602  &lt; 2e-16 ***
-## EDUC.f6                       3420.972    151.336   22.605  &lt; 2e-16 ***
-## EDUC.f7                       5238.529    156.562   33.460  &lt; 2e-16 ***
-## EDUC.f8                      12886.996    162.275   79.415  &lt; 2e-16 ***
-## EDUC.f10                     17975.055    155.333  115.720  &lt; 2e-16 ***
-## EDUC.f11                     21928.799    159.958  137.091  &lt; 2e-16 ***
-## SEX.f2                       -6268.945     37.432 -167.477  &lt; 2e-16 ***
-## MARST.f1                      9195.829     41.745  220.284  &lt; 2e-16 ***
-## SPEAKENG.f1                   3201.609    198.149   16.158  &lt; 2e-16 ***
-## SPEAKENG.f2                    577.156    224.483    2.571 0.010139 *  
-## STATE.fAlaska                 5044.725    403.537   12.501  &lt; 2e-16 ***
-## STATE.fArkansas                268.118    193.214    1.388 0.165237    
-## STATE.fCalifornia             -655.716    235.133   -2.789 0.005292 ** 
-## STATE.fColorado               1565.739    156.142   10.028  &lt; 2e-16 ***
-## STATE.fDelaware               2828.902    199.074   14.210  &lt; 2e-16 ***
-## STATE.fDistrict of Columbia   3593.888    227.112   15.824  &lt; 2e-16 ***
-## STATE.fFlorida                2436.579    355.613    6.852 7.30e-12 ***
-## STATE.fGeorgia                 806.055    186.285    4.327 1.51e-05 ***
-## STATE.fHawaii                 2829.828    281.177   10.064  &lt; 2e-16 ***
-## STATE.fIdaho                  -500.719    279.219   -1.793 0.072927 .  
-## STATE.fIllinois               3188.676    169.575   18.804  &lt; 2e-16 ***
-## STATE.fIndiana                2333.446    190.154   12.271  &lt; 2e-16 ***
-## STATE.fIowa                   2940.390    216.580   13.576  &lt; 2e-16 ***
-## STATE.fKansas                 1396.593    224.616    6.218 5.05e-10 ***
-## STATE.fKentucky                582.708    207.247    2.812 0.004929 ** 
-## STATE.fLouisiana               828.014    219.595    3.771 0.000163 ***
-## STATE.fMaine                   184.433    288.717    0.639 0.522952    
-## STATE.fMaryland               5036.821    199.138   25.293  &lt; 2e-16 ***
-## STATE.fMassachusetts          3935.340    192.651   20.427  &lt; 2e-16 ***
-## STATE.fMichigan               1069.397    172.409    6.203 5.55e-10 ***
-## STATE.fMinnesota              3960.138    191.678   20.660  &lt; 2e-16 ***
-## STATE.fMississippi           -1032.942    249.377   -4.142 3.44e-05 ***
-## STATE.fMissouri               1206.140    189.820    6.354 2.10e-10 ***
-## STATE.fMontana               -1016.557    316.934   -3.207 0.001339 ** 
-## STATE.fNebraska               2854.853    255.579   11.170  &lt; 2e-16 ***
-## STATE.fNevada                 2271.843    241.154    9.421  &lt; 2e-16 ***
-## STATE.fNew Hampshire          3441.328    297.275   11.576  &lt; 2e-16 ***
-## STATE.fNew Jersey             4271.132    185.180   23.065  &lt; 2e-16 ***
-## STATE.fNew Mexico             -690.256    271.852   -2.539 0.011114 *  
-## STATE.fNew York               2566.598    163.099   15.736  &lt; 2e-16 ***
-## STATE.fNorth Carolina           34.965    180.159    0.194 0.846115    
-## STATE.fNorth Dakota           2853.066    364.086    7.836 4.64e-15 ***
-## STATE.fOhio                   2635.531    171.888   15.333  &lt; 2e-16 ***
-## STATE.fOklahoma                 90.180    209.544    0.430 0.666930    
-## STATE.fOregon                 1219.687    214.577    5.684 1.31e-08 ***
-## STATE.fPennsylvania           2571.932    166.636   15.434  &lt; 2e-16 ***
-## STATE.fRhode Island           3383.541    352.228    9.606  &lt; 2e-16 ***
-## STATE.fSouth Carolina         -467.203    209.523   -2.230 0.025758 *  
-## STATE.fSouth Dakota           2420.287    343.337    7.049 1.80e-12 ***
-## STATE.fTennessee               407.299    194.485    2.094 0.036238 *  
-## STATE.fTexas                  1294.990    162.180    7.985 1.41e-15 ***
-## STATE.fUtah                    779.507    228.992    3.404 0.000664 ***
-## STATE.fVermont                1163.438    384.050    3.029 0.002450 ** 
-## STATE.fVirginia               2638.648    185.392   14.233  &lt; 2e-16 ***
-## STATE.fWashington             2831.646    187.073   15.137  &lt; 2e-16 ***
-## STATE.fWest Virginia          -123.080    279.715   -0.440 0.659924    
-## STATE.fWisconsin              3117.950    188.158   16.571  &lt; 2e-16 ***
-## STATE.fWyoming                3985.031    432.433    9.215  &lt; 2e-16 ***
-## FAMSIZE                        367.982     12.886   28.556  &lt; 2e-16 ***
-## AGE                           -332.860      1.047 -318.060  &lt; 2e-16 ***
+## (Intercept)                  17303.848    284.952   60.725  &lt; 2e-16 ***
+## EDUC.f1                        749.395    318.304    2.354 0.018556 *  
+## EDUC.f2                       -990.234    192.050   -5.156 2.52e-07 ***
+## EDUC.f3                      -7166.216    209.249  -34.247  &lt; 2e-16 ***
+## EDUC.f4                     -10538.198    187.471  -56.212  &lt; 2e-16 ***
+## EDUC.f5                     -10538.882    181.079  -58.201  &lt; 2e-16 ***
+## EDUC.f6                       3195.634    150.694   21.206  &lt; 2e-16 ***
+## EDUC.f7                       5073.908    155.892   32.548  &lt; 2e-16 ***
+## EDUC.f8                      12398.291    161.618   76.713  &lt; 2e-16 ***
+## EDUC.f10                     17362.865    154.734  112.211  &lt; 2e-16 ***
+## EDUC.f11                     21420.552    159.316  134.453  &lt; 2e-16 ***
+## SEX.f2                       -6494.334     37.310 -174.064  &lt; 2e-16 ***
+## MARST.f1                      9400.204     41.595  225.995  &lt; 2e-16 ***
+## SPEAKENG.f1                   4339.977    197.487   21.976  &lt; 2e-16 ***
+## SPEAKENG.f2                    848.377    223.524    3.795 0.000147 ***
+## STATE.fAlaska                 5210.368    401.798   12.968  &lt; 2e-16 ***
+## STATE.fArkansas                156.056    192.383    0.811 0.417266    
+## STATE.fCalifornia             -704.410    234.119   -3.009 0.002623 ** 
+## STATE.fColorado               1150.343    155.501    7.398 1.39e-13 ***
+## STATE.fDelaware               2717.872    198.217   13.712  &lt; 2e-16 ***
+## STATE.fDistrict of Columbia   3709.961    226.134   16.406  &lt; 2e-16 ***
+## STATE.fFlorida                2515.292    354.079    7.104 1.21e-12 ***
+## STATE.fGeorgia                 818.598    185.482    4.413 1.02e-05 ***
+## STATE.fHawaii                 2850.081    279.964   10.180  &lt; 2e-16 ***
+## STATE.fIdaho                  -530.226    278.014   -1.907 0.056496 .  
+## STATE.fIllinois               3209.574    168.843   19.009  &lt; 2e-16 ***
+## STATE.fIndiana                2473.837    189.337   13.066  &lt; 2e-16 ***
+## STATE.fIowa                   3135.469    215.651   14.540  &lt; 2e-16 ***
+## STATE.fKansas                 1396.828    223.647    6.246 4.22e-10 ***
+## STATE.fKentucky                603.510    206.353    2.925 0.003448 ** 
+## STATE.fLouisiana               859.905    218.648    3.933 8.40e-05 ***
+## STATE.fMaine                   386.868    287.476    1.346 0.178387    
+## STATE.fMaryland               5078.560    198.279   25.613  &lt; 2e-16 ***
+## STATE.fMassachusetts          3965.317    191.820   20.672  &lt; 2e-16 ***
+## STATE.fMichigan               1232.140    171.670    7.177 7.11e-13 ***
+## STATE.fMinnesota              4235.866    190.863   22.193  &lt; 2e-16 ***
+## STATE.fMississippi            -919.555    248.303   -3.703 0.000213 ***
+## STATE.fMissouri               1226.573    189.002    6.490 8.60e-11 ***
+## STATE.fMontana               -1117.167    315.568   -3.540 0.000400 ***
+## STATE.fNebraska               2827.355    254.476   11.110  &lt; 2e-16 ***
+## STATE.fNevada                 1718.932    240.151    7.158 8.21e-13 ***
+## STATE.fNew Hampshire          3612.666    295.996   12.205  &lt; 2e-16 ***
+## STATE.fNew Jersey             4200.068    184.382   22.779  &lt; 2e-16 ***
+## STATE.fNew Mexico             -646.483    270.680   -2.388 0.016924 *  
+## STATE.fNew York               2384.073    162.401   14.680  &lt; 2e-16 ***
+## STATE.fNorth Carolina           22.310    179.382    0.124 0.901020    
+## STATE.fNorth Dakota           2820.049    362.516    7.779 7.31e-15 ***
+## STATE.fOhio                   2613.101    171.147   15.268  &lt; 2e-16 ***
+## STATE.fOklahoma                 73.583    208.640    0.353 0.724328    
+## STATE.fOregon                  974.574    213.660    4.561 5.08e-06 ***
+## STATE.fPennsylvania           2701.524    165.920   16.282  &lt; 2e-16 ***
+## STATE.fRhode Island           3551.863    350.711   10.128  &lt; 2e-16 ***
+## STATE.fSouth Carolina         -332.195    208.621   -1.592 0.111310    
+## STATE.fSouth Dakota           2405.960    341.856    7.038 1.95e-12 ***
+## STATE.fTennessee               337.058    193.647    1.741 0.081757 .  
+## STATE.fTexas                  1257.340    161.481    7.786 6.90e-15 ***
+## STATE.fUtah                    854.931    228.005    3.750 0.000177 ***
+## STATE.fVermont                1435.642    382.399    3.754 0.000174 ***
+## STATE.fVirginia               2677.969    184.593   14.507  &lt; 2e-16 ***
+## STATE.fWashington             2626.297    186.272   14.099  &lt; 2e-16 ***
+## STATE.fWest Virginia           -49.784    278.509   -0.179 0.858133    
+## STATE.fWisconsin              3256.488    187.349   17.382  &lt; 2e-16 ***
+## STATE.fWyoming                3891.542    430.569    9.038  &lt; 2e-16 ***
+## FAMSIZE                        146.808     12.942   11.344  &lt; 2e-16 ***
+## AGE                           -329.218      1.042 -315.829  &lt; 2e-16 ***
+## OWNERSHP                      4516.198     34.604  130.510  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 26000 on 1961613 degrees of freedom
-## Multiple R-squared:  0.1754, Adjusted R-squared:  0.1754 
-## F-statistic:  6519 on 64 and 1961613 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 25890 on 1961612 degrees of freedom
+## Multiple R-squared:  0.1825, Adjusted R-squared:  0.1825 
+## F-statistic:  6736 on 65 and 1961612 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The backward stepwise regression shows that all the variables are significant.</p>
 </div>
 </div>
 <div id="final-model" class="section level3">
 <h3>Final Model</h3>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"],["(Intercept)","EDUC.f1","EDUC.f2","EDUC.f3","EDUC.f4","EDUC.f5","EDUC.f6","EDUC.f7","EDUC.f8","EDUC.f10","EDUC.f11","SEX.f2","MARST.f1","SPEAKENG.f1","SPEAKENG.f2","FAMSIZE","AGE"],[24753.94912,807.97979,-1036.99627,-7189.09602,-10541.54385,-10491.97788,3478.87632,5252.53036,12995.602,18155.0152,22160.21512,-6271.93591,9153.18212,3056.22059,598.30752,375.59768,-332.88614],[0,0.01159,0,0,0,0,0,0,0,0,0,0,0,0,0.00777,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<p>Our final model enables us to use variables including years of education, marital status, ability to speak English, family size and age to predict one’s wage.</p>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"],["(Intercept)","EDUC.f1","EDUC.f2","EDUC.f3","EDUC.f4","EDUC.f5","EDUC.f6","EDUC.f7","EDUC.f8","EDUC.f10","EDUC.f11","SEX.f2","MARST.f1","SPEAKENG.f1","SPEAKENG.f2","FAMSIZE","AGE","OWNERSHP"],[19146.02339,677.57038,-1052.72446,-7280.91212,-10550.84875,-10512.25358,3302.14393,5117.49706,12550.11825,17571.22916,21677.05142,-6492.90951,9377.76574,4303.86193,866.42178,147.08427,-329.31574,4470.89584],[0,0.0335,0,0,0,0,0,0,0,0,0,0,0,0,0.00011,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>Our final model enables us to use variables including years of education, marital status, ability to speak English, family size and age to predict one’s wage. Since all the data is from the United States, the model is only used to predict wages in the United States.</p>
+<p>For education, coefficients tell us how much/less wage one can get compared to not having school at all. For example, the coefficient for EDUC.f6 (grade12) is 3302.14393, which means compared with no schooling, graduating from high school can increase average wage by $3302.14 per year. We noticed that the coefficients are negative from EDUC.f2 (grade 4) to EDUC.f5 (grade11), which means for those who go to school but haven’t graduated from high school, the average wages are less than not going to school at all. However, there’s a turning point at grade 12, from that point the average wage increases as years of education increases. We believe it’s because having a high school diploma is important. Receiving a high school diploma can help to increase wage, but education before that can help little. Moreover, those who choose to go to work directly may be able to gain more working experience compared to those who go to primary or secondary school for a few years.</p>
+<p>We can also find that female’s average wage is $6492.90 per year less than male.</p>
+<p>In terms of marriage status, the average wage per year for married people is $9377.76 higher.</p>
+<p>Moreover, the average wage per year for people who can fluently speak English is $4303.86 higher compared to those who can’t speak English.</p>
+<p>We find a negative relationship between age and annual wage; as age increase by 1, wage decreases by $329.32.</p>
+<p>For the ownership of dwelling (tenure), the model indicates that those who rent the dwell have higher average wage.</p>
+<p>We find a positive correlation between family size and the wage wage: if the family size increases by one, the wage can increase by $147.08.</p>
 </div>
 <div id="coefficient-breakdown" class="section level3">
 <h3>Coefficient Breakdown</h3>
@@ -235,26 +247,23 @@ featuredVideo: null
 <div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],["(Intercept)","EDUC.f1","EDUC.f2","EDUC.f3","EDUC.f4","EDUC.f5","EDUC.f6","EDUC.f7","EDUC.f8","EDUC.f10","EDUC.f11"],[10779.76645,-1188.60116,-1430.49846,-3318.01018,-5414.4705,-4884.61831,5640.53847,8605.34586,16010.02586,21737.0139,24596.18779],[0,0.00037,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p><img src="/analysis_files/figure-html/variable:%20EDUC%20%20graph-1.png" width="672" />
-We noticed that at first, as the year of education increase, the wage is lower comparing with no schooling. However, since level 6, which is grade 12, one’s wage increases as education level increase.</p>
+We noticed that at first, as the year of education increases, the wage is lower compared with no schooling. However, since level 6, which is grade 12, one’s wage increases as education level increases. We believe it’s because having a high school diploma is important. Receiving a high school diploma can help to increase wage, but education before that can help little. Moreover, those who choose to go to work directly may be able to gain more working experience compared to those who go to primary or secondary school for a few years. The graph also shows that there is a huge amount of outliers for the categories that have lower education levels. It is probably because individuals who haven’t received much education are quite different from each other.</p>
 <div id="wage-education-by-sex" class="section level5">
 <h5>wage ~ education (by sex)</h5>
 <p><img src="/analysis_files/figure-html/variable:%20EDUC%20+%20gender-1.png" width="672" />
-From the graph and interaction analysis, we can find gender does play a role in influence education’s effect on wage: no matter how much education one have received, male’s average wage is always higher than female.</p>
+From the graph above, we can find gender does play a role in influencing education’s effect on wage: for most of the education levels, male’s median wage is higher than female. However, we did notice that the gap between male and female started to decrease since grade 12. Female’s median wage even becomes higher than male for “5+ years in college”.</p>
+</div>
+<div id="wage-educationsex-interaction-anaylsis" class="section level5">
+<h5>wage ~ education*sex interaction anaylsis</h5>
 <div id="htmlwidget-4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"],["(Intercept)","EDUC.f1","EDUC.f2","EDUC.f3","EDUC.f4","EDUC.f5","EDUC.f6","EDUC.f7","EDUC.f8","EDUC.f10","EDUC.f11","SEX.f2","EDUC.f1:SEX.f2","EDUC.f2:SEX.f2","EDUC.f3:SEX.f2","EDUC.f4:SEX.f2","EDUC.f5:SEX.f2","EDUC.f6:SEX.f2","EDUC.f7:SEX.f2","EDUC.f8:SEX.f2","EDUC.f10:SEX.f2","EDUC.f11:SEX.f2"],[14047.3088,-627.20574,-831.70461,-4491.73392,-7145.2102,-6622.55672,6744.8904,9450.75514,17891.2605,22752.53668,21149.04062,-6661.84725,-860.46683,-1387.8265,1836.79235,3276.14116,3347.11621,-2210.18267,-1223.65128,-2335.7633,-939.19253,6971.65332],[0,0.18234,0.00287,0,0,0,0,0,0,0,0,0,0.19347,0.00052,2e-05,0,0,0,0.00011,0,0.0028,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<p><img src="/analysis_files/figure-html/QQ-1.png" width="672" /></p>
-<div id="htmlwidget-5" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],["(Intercept)","as.factor(EDUC)1","as.factor(EDUC)2","as.factor(EDUC)3","as.factor(EDUC)4","as.factor(EDUC)5","as.factor(EDUC)6","as.factor(EDUC)7","as.factor(EDUC)8","as.factor(EDUC)10","as.factor(EDUC)11"],[14047,-627,-832,-4492,-7145,-6623,6745,9451,17891,22753,21149],[0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<div id="htmlwidget-6" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],["(Intercept)","as.factor(EDUC)1","as.factor(EDUC)2","as.factor(EDUC)3","as.factor(EDUC)4","as.factor(EDUC)5","as.factor(EDUC)6","as.factor(EDUC)7","as.factor(EDUC)8","as.factor(EDUC)10","as.factor(EDUC)11"],[7385,-1488,-2220,-2655,-3869,-3275,4535,8227,15555,21813,28121],[0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<p>From the graph and interaction analysis, we can find gender does play a role in influence education’s effect on wage: no matter how much education one have received, male’s average wage is always higher than female.</p>
+<p>We continue to analysis the the relationship between education, sex and wage by running a model containing education and sex interaction. The p-values of interaction terms are fairly small, which shows that the effects of education on wages are different between male and female.</p>
 </div>
 </div>
 <div id="wage-age-by-sex" class="section level4">
 <h4>wage ~ age (by sex)</h4>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="/analysis_files/figure-html/q1.2.2-1.png" width="672" />
-Wage increases as age increase from 14 to 30, and then decreases.</p>
+Wage increases as age increase from 14 to 30, and then decreases. Average wage is approching to 0 after 80 years old. Moreover, male’s wage is always higher than female. The gap between two gender is biggest from 25 years old to 50 years old: males average wage is about $8,000 higher than male per year.</p>
 </div>
 <div id="wage-marital-status-by-sex" class="section level4">
 <h4>wage ~ marital status (by sex)</h4>
@@ -263,75 +272,10 @@ Generally speaking, married people are more likely to have higher wages. However
 </div>
 </div>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
-<p>We provides a model that can help us to use years of education, marital status, ability to speak English, family size and age to predict one’s wage to predict one’s wage.</p>
-<hr />
-</div>
-<div id="note-on-attribution" class="section level2">
-<h2>Note on Attribution</h2>
-<p>If you are directly quoting from a source, please make that clear. You can show quotes using <code>&gt;</code> like this</p>
-<pre><code>&gt; To be or not to be.</code></pre>
-<blockquote>
-<p>To be or not to be.</p>
-</blockquote>
-<p>Also, make sure to provide a link or citation to where you are quoting from.</p>
-<hr />
-</div>
-<div id="rubric-on-this-page" class="section level2">
-<h2>Rubric: On this page</h2>
-<p>you will</p>
-<ul>
-<li>Introduce what motivates your Data Analysis (DA)
-<ul>
-<li>Which variables and relationships are you most interested in?</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#the relationship between wage and education.
-#what factors can influence one&#39;s wage and salary</code></pre>
-<ul>
-<li>What questions are you interested in answering?</li>
-</ul>
-<pre class="r"><code>#the relationship between wage and education</code></pre>
-<ul>
-<li>Breadth of the DA
-<ul>
-<li>Make sure that you ask enough initial questions to explore the different variables in your data.</li>
-<li>i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#we explore the relationship between wage and education, colored by gender</code></pre>
-<ul>
-<li><p>Depth of the DA</p>
-<ul>
-<li>When you answer one question, usually more questions arise as well.</li>
-<li>The depth of the DA is about coming up with and exploring the answers to these questions, often iterating the process a few times.</li>
-</ul></li>
-<li><p>Modeling and Inference</p>
-<ul>
-<li><p>You should also include some kind of formal statistical model and/or inference. This could be a linear regression, logistic regression, hypothesis testing etc.</p></li>
-<li><p>Explain the techniques you used for validating your results.</p></li>
-<li><p>Describe the results of your modelling and make sure to give a sense of the uncertainty in your estimates and conclusions.</p></li>
-</ul></li>
-<li><p>Explain the flaws and limitations of your analysis</p>
-<ul>
-<li>Are there some assumptions that you needed to make that might not hold? Is there other data that would help to answer your questions? …</li>
-</ul></li>
-<li><p>Clarity Figures</p>
-<ul>
-<li>Are your figures/tables/results easy to read, informative, without problems like overplotting, hard-to-read labels, etc?</li>
-<li>Each figure should provide a key insight. Too many figures or other data summaries can detract from this.</li>
-</ul></li>
-<li><p>Clarity of Explanations</p>
-<ul>
-<li>Do you introduce why you are doing each analysis?</li>
-<li>How well do you explain each figure/result?</li>
-<li>Do you provide interpretations that suggest further analysis or explanations for observed phenomenon?</li>
-</ul></li>
-<li><p>Organization and cleanliness.</p>
-<ul>
-<li>Make sure to remove excessive warnings, use clean easy-to-read code, organize with sections or multiple pages, use bullets, etc.</li>
-</ul></li>
-</ul>
-<p><strong>NOTE</strong>: Your Data Analysis can be broken up into multiple pages if that helps with your organization.</p>
+<div id="conclusion-and-limitation" class="section level2">
+<h2>Conclusion and Limitation</h2>
+<p>Our project provides a model that can help us to use years of education, marital status, ability to speak English, family size, ownership of dwellings and age to predict one’s wage.</p>
+<p>More specifically, we find that receiving a high school diploma is quite important. Our wages are significantly higher after we receive our high school diploma. Our wages then tends to increase as our education level increases. Moreover, there’s gender differences between males and females. Compared with females who have received the same levels of education, men’s wage is likely to be higher. In terms of age, one’s wage is likely to increase till around 35, and then decrease. Again, men are likely to earn higher wages than women who are as old as them. For marriage, married people are more likely to have higher wages. The gender gap between two sex is larger for married group compared with non-married group. Moreover, people who rent dwellings have higher average wages. We also observe a positive relationship between family size and wage, and we conclude that being able to speak English fluently is likely to have higher wages.</p>
+<p>One thing that we want to highlight in our project is the importance of education. Trying to get a high school diploma, and even a college degree is significant to increase one’s wage. Moreover, there are gender differences. Females are more likely to be treated unfairly if they have less education and been married. We hope our project can raise people’s awareness about education and gender differences.</p>
+<p>For our flows and limitation, we thought that the relationship between wage and education would always be positive. But it is negative in the first few years of education. We tried to interpret the reason but we definitely could look deeper into that. Additionally, we only include data in 2020 to keep the data size small, but there is data of the past few decades. So if we have a better computer to run the code, we can look into and compare our models with different years, and our model could be more accurate with a larger data set.</p>
 </div>
