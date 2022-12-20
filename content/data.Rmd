@@ -3,7 +3,7 @@ title: Data
 description:
 toc: true
 featuredVideo:
-featuredImage: images/Data_Pic.png
+featuredImage: images/data-import-cheatsheet-thumbs.png
 draft: false
 ---
 
